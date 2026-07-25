@@ -643,6 +643,104 @@
     listenResize(draw);draw();
   }
 
+  function createDliPipeline(root, canvas, controls) {
+    const stages = [
+      { label: "환경", lab: "JupyterLab", input: "GPU 런타임", model: "TensorFlow · Keras", target: "셀 실행", signal: "실험을 재현할 준비" },
+      { label: "MNIST", lab: "손글씨 10종", input: "(B, 28, 28)", model: "Flatten → Dense", target: "softmax · 10", signal: "첫 fit–validate 루프" },
+      { label: "ASL", lab: "수화 24종", input: "(B, 784)", model: "Dense network", target: "softmax · 24", signal: "훈련↑ · 검증 간격" },
+      { label: "CNN", lab: "공간 구조 활용", input: "(B, 28, 28, 1)", model: "Conv → Pool → Dropout", target: "softmax · 24", signal: "지역성과 가중치 공유" },
+      { label: "증강", lab: "변화에 견디기", input: "rotate · shift · zoom", model: "train-only transforms", target: "라벨 보존", signal: "검증 간격 축소" },
+      { label: "VGG16", lab: "전이학습", input: "(B, 224, 224, 3)", model: "Frozen base → new head", target: "새 이미지 클래스", signal: "적은 데이터로 재사용" },
+      { label: "LSTM", lab: "헤드라인 생성", input: "(B, T) token IDs", model: "Embedding → LSTM", target: "다음 단어", signal: "순서와 상태 기억" },
+      { label: "평가", lab: "신선/부패 과일", input: "(B, 224, 224, 3)", model: "Transfer + augment", target: "softmax · 6", signal: "검증 정확도 ≥ 92%" }
+    ];
+    const state = { stage: 0 };
+    controls.innerHTML =
+      controlRange("stage", "LAB STEP", 0, stages.length - 1, 1, 0) +
+      controlButton("next", "다음 실습으로 →") +
+      controlButton("reset", "처음부터") +
+      `<div class="control-result"></div>`;
+
+    function draw() {
+      const { ctx, width, height } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      const active = stages[state.stage];
+      const left = Math.max(28, width * .07);
+      const right = width - left;
+      const railY = height * .72;
+      const gap = (right - left) / (stages.length - 1);
+
+      stages.forEach((stage, index) => {
+        const x = left + index * gap;
+        if (index < stages.length - 1) {
+          line(
+            ctx, x + 8, railY, x + gap - 8, railY,
+            index < state.stage ? colors.lime : (isDark() ? "#4b4c45" : "#cbc8bf"),
+            index < state.stage ? 4 : 2
+          );
+        }
+        point(
+          ctx, x, railY,
+          index < state.stage ? colors.mint : index === state.stage ? colors.lime : (isDark() ? "#44453f" : "#d6d3ca"),
+          index === state.stage ? 18 : 10,
+          paper()
+        );
+        mono(ctx, String(index).padStart(2, "0"), x, railY + 34, 8, muted(), "center");
+        if (width > 520 || index === state.stage) {
+          text(ctx, stage.label, x, railY + 54, 9, ink(), "center", index === state.stage ? 800 : 500);
+        }
+      });
+
+      roundedRect(ctx, left, 34, right - left, height * .49, 20);
+      ctx.fillStyle = isDark() ? "rgba(255,255,255,.045)" : "rgba(23,24,19,.035)";
+      ctx.fill();
+      ctx.strokeStyle = isDark() ? "rgba(255,255,255,.13)" : "rgba(23,24,19,.13)";
+      ctx.stroke();
+
+      mono(ctx, `STEP ${String(state.stage).padStart(2, "0")} · ${active.label.toUpperCase()}`, left + 22, 60, 9, colors.coral);
+      text(ctx, active.lab, left + 22, 92, Math.min(25, width * .045), ink(), "left", 900);
+
+      const items = [
+        ["INPUT", active.input],
+        ["MODEL", active.model],
+        ["TARGET", active.target],
+        ["WHY NEXT", active.signal]
+      ];
+      const columns = width < 560 ? 2 : 4;
+      const cellWidth = (right - left - 44) / columns;
+      items.forEach(([label, value], index) => {
+        const row = Math.floor(index / columns);
+        const column = index % columns;
+        const x = left + 22 + column * cellWidth;
+        const y = 138 + row * 68;
+        mono(ctx, label, x, y, 8, muted());
+        text(ctx, value, x, y + 24, width < 560 ? 10 : 11, ink(), "left", 700);
+      });
+
+      setResult(root, "현재 단계", `${active.label} · ${active.signal}`);
+    }
+
+    bindRange(root, "stage", state, draw, value => `${value} / ${stages.length - 1}`);
+    controls.querySelector('[data-control="next"]').addEventListener("click", () => {
+      state.stage = Math.min(stages.length - 1, state.stage + 1);
+      const input = controls.querySelector('[data-control="stage"]');
+      const output = controls.querySelector('[data-output="stage"]');
+      input.value = state.stage;
+      output.textContent = `${state.stage} / ${stages.length - 1}`;
+      draw();
+    });
+    controls.querySelector('[data-control="reset"]').addEventListener("click", () => {
+      state.stage = 0;
+      const input = controls.querySelector('[data-control="stage"]');
+      const output = controls.querySelector('[data-output="stage"]');
+      input.value = 0;
+      output.textContent = `0 / ${stages.length - 1}`;
+      draw();
+    });
+    listenResize(draw);
+    draw();
+  }
+
   const factories = {
     timeline: createTimeline,
     knn: createKnn,
@@ -654,6 +752,7 @@
     neuron: createNeuron,
     convolution: createConvolution,
     rnn: createRnn,
+    "dli-pipeline": createDliPipeline,
     anomaly: createAnomaly
   };
 

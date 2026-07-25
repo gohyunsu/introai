@@ -828,13 +828,14 @@ print(pca.explained_variance_ratio_.sum())`
       phaseLabel: "딥러닝",
       shortTitle: "신경망 학습",
       title: "표현을 쌓고, 오차를 거꾸로 전달하기",
-      subtitle: "뉴런의 가중합에서 다층 신경망, 순전파·역전파, 옵티마이저·드롭아웃·조기 종료까지 연결합니다.",
-      summary: "뉴런, 활성화 함수, MLP, 역전파, Adam, Dropout, Callback",
+      subtitle: "뉴런의 가중합에서 MNIST 전처리, 순전파·역전파, 옵티마이저·드롭아웃·조기 종료까지 한 학습 루프로 연결합니다.",
+      summary: "뉴런, MNIST, 활성화 함수, MLP, 역전파, Adam, 일반화",
       question: "79,510개의 파라미터는 어떻게 각자의 책임을 알게 될까?",
-      minutes: 58,
-      keywords: ["인공신경망", "뉴런", "가중치", "편향", "ReLU", "MLP", "순전파", "역전파", "Adam", "Dropout", "Early Stopping", "Fashion MNIST"],
+      minutes: 68,
+      keywords: ["인공신경망", "MNIST", "뉴런", "가중치", "편향", "ReLU", "MLP", "순전파", "역전파", "Adam", "Dropout", "Early Stopping", "Fashion MNIST"],
       objectives: [
         "뉴런의 가중합·편향·활성화 함수를 계산한다.",
+        "MNIST의 입력·타깃·출력 모양과 손실 함수의 계약을 점검한다.",
         "순전파, 손실, 역전파, 옵티마이저의 역할을 분리해 설명한다.",
         "드롭아웃·조기 종료·체크포인트가 일반화를 돕는 방식을 이해한다."
       ],
@@ -847,6 +848,7 @@ print(pca.explained_variance_ratio_.sum())`
             <p>뉴런은 입력마다 가중치를 곱해 더하고 편향을 더한 뒤 활성화 함수를 적용합니다. 가중치는 어떤 입력을 얼마나 중요하게 볼지, 편향은 결정 경계를 원점에서 얼마나 이동할지 정합니다.</p>
             <p>활성화 함수가 모두 선형이면 층을 아무리 많이 쌓아도 전체는 하나의 선형 변환과 같습니다. ReLU 같은 비선형 함수가 있어야 여러 층이 꺾인 복잡한 결정 경계를 표현할 수 있습니다.</p>
           `,
+          visuals: ["neural-network"],
           equation: {
             label: "한 뉴런의 순전파",
             tex: S`v=\mathbf x^\top\mathbf w+b,\qquad y=\phi(v),\qquad \operatorname{ReLU}(v)=\max(0,v)`,
@@ -876,18 +878,54 @@ model = keras.Sequential([
 model.compile(
     optimizer="adam",
     loss="sparse_categorical_crossentropy",
-    metrics=["accuracy"]
+            metrics=["accuracy"]
+)`
+          }
+        },
+        {
+          id: "mnist-first-loop",
+          kicker: "03 · NVIDIA DLI LAB",
+          title: "MNIST에서 딥러닝의 한 사이클을 끝까지 돌린다",
+          body: `
+            <p>NVIDIA 실습의 첫 모델은 손글씨 숫자 분류입니다. 중요한 것은 높은 정확도 자체보다 <strong>입력 모양 → 값의 범위 → 타깃 표현 → 모델 출력 → 손실 함수</strong>가 서로 맞물리는 방식을 한 번에 보는 것입니다.</p>
+            <ol>
+              <li><strong>Load:</strong> 28×28 회색조 이미지와 0~9 정수 라벨을 읽습니다.</li>
+              <li><strong>Reshape:</strong> Dense 모델이라면 이미지를 784 벡터로 펼치고, CNN이라면 28×28×1의 공간 구조를 지킵니다.</li>
+              <li><strong>Normalize:</strong> 0~255 픽셀을 0~1로 바꿔 최적화의 수치 범위를 안정화합니다.</li>
+              <li><strong>Encode:</strong> 라벨을 one-hot으로 바꾸면 categorical cross-entropy, 정수로 유지하면 sparse categorical cross-entropy를 씁니다.</li>
+              <li><strong>Fit and validate:</strong> 훈련 정확도와 검증 정확도의 간격으로 암기 여부를 판단합니다.</li>
+            </ol>
+            <div class="callout success"><span class="callout-icon">✓</span><div><strong>모양 장부(shape ledger)를 습관화하세요.</strong><p>각 셀 뒤에 배열 shape와 값 범위, 라벨 예시를 확인하면 대부분의 실습 오류를 모델을 실행하기 전에 찾을 수 있습니다.</p></div></div>
+          `,
+          visuals: ["mnist"],
+          code: {
+            title: "입력·타깃·출력의 계약 확인",
+            content: `# x_train: (60000, 28, 28), y_train: (60000,)
+x_train = x_train.astype("float32") / 255
+x_valid = x_valid.astype("float32") / 255
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(512, activation="relu"),
+    keras.layers.Dense(512, activation="relu"),
+    keras.layers.Dense(10, activation="softmax"),
+])
+model.compile(
+    optimizer="adam",
+    loss="sparse_categorical_crossentropy",
+    metrics=["accuracy"],
 )`
           }
         },
         {
           id: "backprop",
-          kicker: "03 · LEARNING",
+          kicker: "04 · LEARNING",
           title: "역전파는 기울기를, 옵티마이저는 업데이트를",
           body: `
             <p><strong>순전파</strong>는 입력을 층마다 변환해 예측과 손실을 계산합니다. <strong>역전파</strong>는 연쇄법칙으로 출력 손실이 각 가중치에 얼마나 민감한지 뒤에서 앞으로 계산합니다. <strong>옵티마이저</strong>는 그 기울기를 이용해 실제 가중치를 갱신합니다.</p>
             <p>이 세 역할을 섞어 말하지 않는 것이 중요합니다. 역전파 자체가 학습률을 정하거나 가중치를 바꾸는 것은 아닙니다. SGD, Momentum, RMSprop, Adam이 보폭과 방향의 이력을 관리합니다.</p>
           `,
+          visuals: ["gradient-descent"],
           equation: {
             label: "연쇄법칙으로 책임 배분",
             tex: S`\frac{\partial \mathcal L}{\partial w^{(1)}}=\frac{\partial \mathcal L}{\partial z^{(2)}}\frac{\partial z^{(2)}}{\partial a^{(1)}}\frac{\partial a^{(1)}}{\partial z^{(1)}}\frac{\partial z^{(1)}}{\partial w^{(1)}}`,
@@ -896,7 +934,7 @@ model.compile(
         },
         {
           id: "training-memory",
-          kicker: "04 · SYSTEM VIEW",
+          kicker: "05 · SYSTEM VIEW",
           title: "학습 메모리는 가중치보다 훨씬 크다",
           body: `
             <p>학습 중에는 가중치만 저장하지 않습니다. 각 파라미터의 gradient, Adam의 1차·2차 모멘트, 역전파에 필요한 각 층의 activation이 필요합니다. FP32 Adam 기준 파라미터당 가중치·기울기·두 상태값으로만 대략 4배 메모리가 듭니다.</p>
@@ -905,7 +943,7 @@ model.compile(
         },
         {
           id: "generalization-tools",
-          kicker: "05 · TRAINING PRACTICE",
+          kicker: "06 · TRAINING PRACTICE",
           title: "최고의 마지막 에포크가 아니라 최고의 검증 에포크",
           body: `
             <p><strong>Dropout</strong>은 훈련 중 뉴런 출력을 무작위로 0으로 만들어 특정 경로에만 의존하지 않게 합니다. 추론 때는 모든 뉴런을 사용하며 기대 출력 크기가 맞도록 프레임워크가 처리합니다.</p>
@@ -956,6 +994,8 @@ history = model.fit(
         }
       ],
       sources: [
+        ["NVIDIA DLI · Fundamentals of Deep Learning", "https://www.nvidia.com/content/dam/en-zz/Solutions/deep-learning/deep-learning-education/dli-fundamentals-of-deep-learning-1369828-r3-web.pdf"],
+        ["Keras MNIST dataset", "https://keras.io/api/datasets/mnist/"],
         ["Keras Sequential model guide", "https://keras.io/guides/sequential_model/"],
         ["Keras Training & evaluation guide", "https://keras.io/guides/training_with_built_in_methods/"],
         ["Deep Learning, Nature 2015", "https://www.nature.com/articles/nature14539"]
@@ -968,14 +1008,15 @@ history = model.fit(
       phaseLabel: "딥러닝",
       shortTitle: "이미지와 CNN",
       title: "작은 필터로 공간의 패턴을 읽기",
-      subtitle: "지역 연결·가중치 공유라는 CNN의 핵심에서 합성곱·패딩·스트라이드·풀링, 전이학습까지 나아갑니다.",
-      summary: "합성곱, 커널, 특성맵, 패딩·스트라이드, 풀링, 전이학습",
+      subtitle: "수화 이미지의 과대적합에서 출발해 합성곱·풀링, 데이터 증강, 추론 전처리, VGG16 전이학습까지 이어갑니다.",
+      summary: "CNN, 수화 분류, 증강, 배포 전처리, VGG16 전이학습",
       question: "같은 부리가 사진의 다른 위치에 나타나도 어떻게 알아볼까?",
-      minutes: 55,
-      keywords: ["CNN", "합성곱", "커널", "필터", "feature map", "stride", "padding", "pooling", "channel", "VGG16", "전이학습", "fine-tuning"],
+      minutes: 72,
+      keywords: ["CNN", "ASL", "합성곱", "커널", "필터", "feature map", "stride", "padding", "pooling", "channel", "데이터 증강", "배포", "VGG16", "전이학습", "fine-tuning"],
       objectives: [
         "지역 연결과 가중치 공유가 CNN을 효율적으로 만드는 이유를 설명한다.",
         "입력·커널·패딩·스트라이드로 출력 크기를 계산한다.",
+        "훈련용 증강과 추론용 전처리를 구분한다.",
         "특징 추출, 전이학습, 미세조정의 단계를 구분한다."
       ],
       sections: [
@@ -1000,6 +1041,7 @@ history = model.fit(
             <p>커널의 값과 이미지의 겹친 영역을 원소별로 곱해 더하면 출력 특성맵의 한 픽셀이 됩니다. 커널 하나는 세로 모서리, 질감처럼 하나의 패턴 탐지기를 학습하고, 필터 수만큼 출력 채널이 생깁니다.</p>
             <p>RGB 입력이라면 필터의 깊이도 3이며 세 채널을 함께 계산해 출력 채널 하나를 만듭니다. 커널 \\(K_h\\times K_w\\), 입력 채널 \\(C_{in}\\), 출력 채널 \\(C_{out}\\)인 Conv2D의 파라미터 수는 \\(K_hK_wC_{in}C_{out}+C_{out}\\)입니다.</p>
           `,
+          visuals: ["cnn-layers"],
           equation: {
             label: "패딩과 스트라이드를 고려한 출력 크기",
             tex: S`H_{\mathrm{out}}=\left\lfloor\frac{H_{\mathrm{in}}+2P-K_h}{S}\right\rfloor+1,\qquad W_{\mathrm{out}}=\left\lfloor\frac{W_{\mathrm{in}}+2P-K_w}{S}\right\rfloor+1`,
@@ -1038,8 +1080,45 @@ history = model.fit(
           }
         },
         {
+          id: "augmentation",
+          kicker: "05 · DATA AUGMENTATION",
+          title: "증강은 사진을 늘리는 것이 아니라 불변성을 가르친다",
+          body: `
+            <p>수화 알파벳처럼 표본 수가 제한된 이미지에서 Dense 모델은 훈련 세트를 쉽게 외웁니다. CNN이 공간 구조를 이용해도 촬영 각도·밝기·위치의 다양성이 부족하면 검증 간격이 남습니다. 데이터 증강은 훈련 시점마다 회전, 이동, 확대, 밝기 변화를 무작위로 만들어 <strong>정답을 바꾸지 않는 변화</strong>를 모델에 보여 줍니다.</p>
+            <p>중요한 기준은 “현실에서 일어날 수 있고 라벨을 보존하는가”입니다. 손 모양의 좌우 의미가 다른 문제에서 무조건 좌우 반전을 쓰거나, 숫자 6을 9로 바꿀 만큼 회전하면 증강이 아니라 라벨 잡음이 됩니다. 검증·테스트 데이터에는 무작위 증강을 적용하지 않습니다.</p>
+          `,
+          code: {
+            title: "모델 안에 넣는 훈련 전용 증강",
+            content: `augmentation = keras.Sequential([
+    keras.layers.RandomRotation(0.05),
+    keras.layers.RandomTranslation(0.08, 0.08),
+    keras.layers.RandomZoom(0.12),
+    keras.layers.RandomContrast(0.12),
+])
+
+# 증강 층은 fit 중에만 무작위로 작동하고 predict에서는 꺼집니다.
+x = augmentation(inputs)
+x = base_model(x, training=False)`
+          }
+        },
+        {
+          id: "deployment-contract",
+          kicker: "06 · DEPLOYMENT",
+          title: "배포 입력은 훈련 때의 모양과 의미를 재현해야 한다",
+          body: `
+            <p>노트북에서 잘 된 모델도 카메라 사진 한 장을 그대로 넣으면 실패할 수 있습니다. 훈련 배치는 \\((B,H,W,C)\\)였지만 실제 사진은 \\((H,W,3)\\)이고, 크기·채널 순서·픽셀 범위도 다를 수 있기 때문입니다.</p>
+            <ol>
+              <li>학습 때와 같은 높이·너비로 resize합니다.</li>
+              <li>모델이 요구하는 RGB/회색조와 채널 순서를 맞춥니다.</li>
+              <li>0~1 정규화 또는 VGG16 전용 <code>preprocess_input</code>을 동일하게 적용합니다.</li>
+              <li>단일 이미지를 배치 \\((1,H,W,C)\\)로 만들고 확률과 클래스 매핑을 함께 보존합니다.</li>
+            </ol>
+            <div class="callout warning"><span class="callout-icon">!</span><div><strong>전처리도 모델의 일부입니다.</strong><p>훈련 코드와 서비스 코드가 서로 다른 전처리를 가지면 모델 가중치가 같아도 입력 분포가 달라집니다.</p></div></div>
+          `
+        },
+        {
           id: "transfer",
-          kicker: "05 · TRANSFER LEARNING",
+          kicker: "07 · TRANSFER LEARNING",
           title: "이미 배운 시각 표현을 새 과업에 빌린다",
           body: `
             <p>ImageNet 같은 대규모 데이터로 학습한 모델의 초기 층은 여러 이미지 과업에 재사용 가능한 시각 특징을 담습니다. 작은 데이터에서는 합성곱 기반을 고정하고 새 분류기만 먼저 학습합니다. 이후 낮은 학습률로 상위 일부 층을 풀어 <strong>미세조정</strong>합니다.</p>
@@ -1078,7 +1157,10 @@ history = model.fit(
         }
       ],
       sources: [
+        ["NVIDIA DLI · Fundamentals of Deep Learning", "https://www.nvidia.com/content/dam/en-zz/Solutions/deep-learning/deep-learning-education/dli-fundamentals-of-deep-learning-1369828-r3-web.pdf"],
         ["TensorFlow Image classification", "https://www.tensorflow.org/tutorials/images/classification"],
+        ["TensorFlow Data augmentation", "https://www.tensorflow.org/tutorials/images/data_augmentation"],
+        ["Keras VGG16 and VGG19", "https://keras.io/2/api/applications/vgg/"],
         ["Keras Transfer learning & fine-tuning", "https://keras.io/guides/transfer_learning/"],
         ["Gradient-Based Learning Applied to Document Recognition", "https://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf"]
       ]
@@ -1090,11 +1172,11 @@ history = model.fit(
       phaseLabel: "딥러닝",
       shortTitle: "시퀀스와 RNN",
       title: "이전 상태를 다음 판단에 건네기",
-      subtitle: "텍스트·시계열의 순서를 보존하고 RNN을 시간축으로 펼쳐, LSTM·GRU가 긴 기억을 지키는 원리를 이해합니다.",
-      summary: "순차 데이터, RNN, hidden state, BPTT, embedding, LSTM·GRU",
+      subtitle: "텍스트의 토큰화·패딩에서 RNN의 기억, LSTM·임베딩, 다음 단어 예측과 헤드라인 생성까지 연결합니다.",
+      summary: "토큰화, RNN, hidden state, embedding, LSTM, 헤드라인 생성",
       question: "“Cats say ___”의 첫 단어를 마지막까지 어떻게 기억할까?",
-      minutes: 50,
-      keywords: ["순차데이터", "시계열", "RNN", "hidden state", "unrolling", "BPTT", "embedding", "LSTM", "GRU", "IMDB"],
+      minutes: 62,
+      keywords: ["순차데이터", "토큰화", "패딩", "RNN", "hidden state", "unrolling", "BPTT", "embedding", "LSTM", "GRU", "헤드라인 생성", "next-token prediction"],
       objectives: [
         "순차 데이터에서 표본 순서가 정보인 이유를 설명한다.",
         "RNN의 입력–은닉–출력 계산과 시간축 가중치 공유를 이해한다.",
@@ -1132,6 +1214,8 @@ history = model.fit(
             <p>RNN을 시점마다 복사해 그리면 깊이가 시퀀스 길이인 피드포워드 네트워크처럼 보입니다. 역전파는 이 펼친 계산 그래프를 뒤로 따라가며 같은 공유 가중치가 각 시점에서 받은 기울기를 합칩니다. 이를 BPTT(Backpropagation Through Time)라고 합니다.</p>
             <p>긴 시퀀스에서는 작은 미분값이 반복 곱해져 앞부분 신호가 사라지는 기울기 소실, 큰 값이 반복되어 폭증하는 문제가 생깁니다. 기본 RNN이 “Cats”를 마지막 빈칸까지 기억하기 어려운 이유입니다.</p>
           `
+          ,
+          visuals: ["rnn-unfold"]
         },
         {
           id: "embedding",
@@ -1173,6 +1257,39 @@ model.compile(
     metrics=["accuracy"]
 )`
           }
+        },
+        {
+          id: "headline-generation",
+          kicker: "06 · NVIDIA DLI LAB",
+          title: "헤드라인을 접두사–다음 단어 쌍으로 바꾼다",
+          body: `
+            <p>헤드라인 생성 실습은 문장을 통째로 외우는 대신, 한 문장의 모든 접두사를 훈련 예제로 만듭니다. “nvidia releases ampere graphics cards”라면 <code>nvidia → releases</code>, <code>nvidia releases → ampere</code>처럼 앞의 토큰들로 다음 토큰을 예측합니다.</p>
+            <p>길이가 다른 접두사는 같은 길이로 padding하고, 마지막 토큰을 전체 어휘에 대한 one-hot 타깃으로 만듭니다. Embedding은 단어 ID를 조밀 벡터로 바꾸고 LSTM은 접두사의 상태를 요약하며, softmax는 다음 단어 분포를 냅니다.</p>
+            <p>생성할 때는 시드 문장을 토큰화·패딩해 다음 단어를 하나 뽑고, 그 단어를 다시 입력 끝에 붙이는 과정을 반복합니다. 한 스텝의 작은 오류가 다음 입력이 되므로 문법적으로 그럴듯해도 의미가 쉽게 흐트러질 수 있습니다. 이는 <strong>teacher forcing으로 훈련한 분포와 자기 출력을 입력받는 생성 분포의 차이</strong>를 보여 줍니다.</p>
+          `,
+          equation: {
+            label: "다음 토큰의 범주형 손실",
+            tex: S`\mathcal L=-\sum_{v=1}^{|V|} y_v\log p_\theta\!\left(v\mid w_1,\ldots,w_t\right)`,
+            note: "V는 어휘 집합입니다. 정답 단어의 확률을 높이는 방식은 이미지 다중 분류와 수학적으로 같은 형태입니다."
+          },
+          code: {
+            title: "접두사 시퀀스로 다음 단어 학습",
+            content: `model = keras.Sequential([
+    keras.layers.Embedding(vocab_size, 64, input_length=max_len - 1),
+    keras.layers.LSTM(100),
+    keras.layers.Dropout(0.2),
+    keras.layers.Dense(vocab_size, activation="softmax"),
+])
+model.compile(
+    loss="categorical_crossentropy",
+    optimizer="adam",
+)
+
+# 생성 시에는 예측 단어를 다시 접두사 끝에 붙입니다.
+for _ in range(next_words):
+    token = predict_next_token(seed_text)
+    seed_text += " " + tokenizer.index_word[token]`
+          }
         }
       ],
       interactive: {
@@ -1201,20 +1318,200 @@ model.compile(
         }
       ],
       sources: [
+        ["NVIDIA DLI · Fundamentals of Deep Learning", "https://www.nvidia.com/content/dam/en-zz/Solutions/deep-learning/deep-learning-education/dli-fundamentals-of-deep-learning-1369828-r3-web.pdf"],
         ["TensorFlow Text classification with an RNN", "https://www.tensorflow.org/text/tutorials/text_classification_rnn"],
+        ["Keras text generation with LSTM", "https://keras.io/examples/generative/lstm_character_level_text_generation/"],
         ["Long Short-Term Memory", "https://www.bioinf.jku.at/publications/older/2604.pdf"],
         ["Learning Phrase Representations using RNN Encoder–Decoder", "https://arxiv.org/abs/1406.1078"]
       ]
     },
     {
-      id: "11-anomaly",
+      id: "11-dli-practicum",
       num: "11",
+      phase: "deep",
+      phaseLabel: "딥러닝 실전",
+      shortTitle: "NVIDIA DLI 실습",
+      title: "하나의 실습이 다음 기술의 필요를 만든다",
+      subtitle: "MNIST에서 시작해 수화 CNN, 증강·배포, VGG16 전이학습, LSTM 생성과 과일 분류 평가까지 하나의 프로젝트 성장 과정으로 읽습니다.",
+      summary: "MNIST → ASL → CNN → 증강·배포 → VGG16 → LSTM → 평가",
+      question: "정확도가 막힐 때 데이터·구조·학습 전략 중 무엇을 먼저 바꿔야 할까?",
+      minutes: 76,
+      keywords: ["NVIDIA DLI", "JupyterLab", "MNIST", "ASL", "CNN", "데이터 증강", "배포", "VGG16", "전이학습", "LSTM", "과일 분류", "fine-tuning"],
+      objectives: [
+        "10개 실습 노트북이 해결하는 문제와 앞뒤 의존 관계를 설명한다.",
+        "각 실습에서 입력 shape, 출력층, 손실 함수가 일치하는지 점검한다.",
+        "과대적합 상황에서 CNN·증강·전이학습·미세조정을 순서 있게 선택한다.",
+        "훈련 노트북의 모델을 실제 한 장의 입력에 적용하는 배포 계약을 설명한다."
+      ],
+      sections: [
+        {
+          id: "lab-ladder",
+          kicker: "01 · THE LAB LADDER",
+          title: "열 개의 노트북은 독립 과제가 아니라 한 번의 성장 과정이다",
+          body: `
+            <p>실습은 모델 종류를 나열하지 않습니다. 앞 실습에서 드러난 한계가 다음 기술을 요구하도록 설계되어 있습니다. 이 연결을 먼저 알면 빈 코드 칸을 채우는 작업이 “왜 이 층을 넣는가”라는 모델링 판단으로 바뀝니다.</p>
+            <table class="comparison-table">
+              <thead><tr><th>실습</th><th>핵심 행동</th><th>다음 질문</th></tr></thead>
+              <tbody>
+                <tr><td>00 · JupyterLab</td><td>GPU 실습 환경과 노트북 실행 흐름 확인</td><td>데이터에서 첫 모델을 어떻게 학습할까?</td></tr>
+                <tr><td>01 · MNIST</td><td>정규화, Dense, softmax, fit</td><td>더 복잡하고 적은 데이터에서도 일반화할까?</td></tr>
+                <tr><td>02 · ASL</td><td>미국 수화 24개 클래스를 Dense로 분류</td><td>훈련은 좋은데 검증이 낮은 이유는?</td></tr>
+                <tr><td>03 · ASL CNN</td><td>공간 구조와 필터를 이용</td><td>촬영 변화까지 견디게 할 수 있을까?</td></tr>
+                <tr><td>04a/b · 증강·예측</td><td>훈련 다양성 확대, 한 장 추론</td><td>적은 데이터로 더 강한 표현을 얻을 수 있을까?</td></tr>
+                <tr><td>05a/b · VGG16</td><td>사전학습 모델 사용, 동결과 전이학습</td><td>이미지 밖의 순차 데이터는?</td></tr>
+                <tr><td>06 · 헤드라인</td><td>토큰화, embedding, LSTM, 다음 단어 생성</td><td>배운 전략을 새 문제에 조합할 수 있을까?</td></tr>
+                <tr><td>07 · 평가</td><td>신선/부패 과일 6종, 92% 이상 검증 정확도</td><td>스스로 진단하고 개선하는가?</td></tr>
+              </tbody>
+            </table>
+          `,
+          visuals: ["mnist"]
+        },
+        {
+          id: "shape-ledger",
+          kicker: "02 · SHAPE LEDGER",
+          title: "모든 레이어 옆에 텐서 모양을 적는다",
+          body: `
+            <p>딥러닝 실습 오류의 상당수는 개념보다 shape에서 생깁니다. 배치 축 \\(B\\), 높이 \\(H\\), 너비 \\(W\\), 채널 \\(C\\), 클래스 \\(K\\)를 이름 붙여 추적하세요. Dense 입력은 \\((B,784)\\), 회색조 CNN 입력은 \\((B,28,28,1)\\), VGG16 컬러 입력은 \\((B,224,224,3)\\)입니다.</p>
+            <p>마지막 Dense의 뉴런 수는 클래스 수와 같아야 합니다. MNIST는 10, 수화 실습은 J·Z를 제외한 24, 과일 평가는 6입니다. 출력이 softmax이고 라벨이 one-hot이면 categorical cross-entropy, 라벨이 정수면 sparse 버전을 씁니다.</p>
+          `,
+          equation: {
+            label: "다중 분류의 출력 계약",
+            tex: S`\hat{\mathbf y}\in[0,1]^K,\qquad \sum_{k=1}^{K}\hat y_k=1,\qquad \mathcal L=-\sum_{k=1}^{K}y_k\log\hat y_k`,
+            note: "K, 라벨 인코딩, 마지막 활성화, 손실 함수가 한 묶음으로 맞아야 합니다."
+          },
+          code: {
+            title: "모델을 학습하기 전의 최소 점검",
+            content: `print("x:", x_train.shape, x_train.dtype)
+print("range:", x_train.min(), x_train.max())
+print("y:", y_train.shape, y_train[:5])
+print("model input:", model.input_shape)
+print("model output:", model.output_shape)
+
+assert model.output_shape[-1] == num_classes`
+          }
+        },
+        {
+          id: "asl-generalization",
+          kicker: "03 · ASL: FROM DENSE TO CNN",
+          title: "수화 분류의 실패는 더 오래 학습하라는 뜻이 아니다",
+          body: `
+            <p>Dense 수화 분류기에서 훈련 정확도는 계속 오르지만 검증 정확도가 뒤처지면 모델이 이미지의 재사용 가능한 규칙보다 훈련 표본의 세부 픽셀을 기억한 것입니다. 이때 에포크를 더 늘리는 것은 간격을 키울 가능성이 큽니다.</p>
+            <p>CNN은 같은 작은 필터를 모든 위치에 적용해 손가락 경계와 국소 질감을 찾습니다. 파라미터를 무작정 늘리지 않고 이미지의 공간 구조라는 가정을 넣는 변화입니다. Max pooling과 dropout은 각각 공간 해상도와 경로 의존성을 줄여 일반화를 돕습니다.</p>
+            <div class="callout success"><span class="callout-icon">→</span><div><strong>진단 순서</strong><p>훈련·검증 곡선 확인 → 입력·라벨 검증 → 구조의 귀납적 편향 확인 → 규제·증강 조정 순으로 접근하세요.</p></div></div>
+          `,
+          visuals: ["cnn-layers"]
+        },
+        {
+          id: "augmentation-to-inference",
+          kicker: "04 · AUGMENT → INFERENCE",
+          title: "훈련의 무작위성은 배포의 결정적 전처리로 이어져야 한다",
+          body: `
+            <p>증강은 매 에포크 다른 표본을 보여 주지만, 서비스의 예측 경로는 재현 가능해야 합니다. 카메라 이미지를 resize하고 채널과 값 범위를 맞춘 뒤 배치 축을 추가하는 과정은 항상 같은 결과를 내야 합니다.</p>
+            <table class="comparison-table">
+              <thead><tr><th>구간</th><th>허용되는 변환</th><th>목적</th></tr></thead>
+              <tbody>
+                <tr><td>훈련</td><td>무작위 회전·이동·확대·밝기</td><td>라벨 보존 변화에 대한 불변성 학습</td></tr>
+                <tr><td>검증</td><td>resize·정규화만</td><td>고정된 기준으로 일반화 측정</td></tr>
+                <tr><td>배포</td><td>검증과 같은 결정적 전처리</td><td>학습 때의 입력 계약 재현</td></tr>
+              </tbody>
+            </table>
+          `
+        },
+        {
+          id: "vgg-transfer",
+          kicker: "05 · PRETRAIN → TRANSFER",
+          title: "VGG16의 일반 특징은 보존하고 새 판단만 먼저 배운다",
+          body: `
+            <p>ImageNet으로 학습한 VGG16의 아래쪽 층은 모서리·색 변화·질감 같은 일반 특징을 이미 가지고 있습니다. <code>include_top=False</code>로 원래 1000종 분류 헤드를 떼고, 새 과업의 pooling·Dense 출력층을 붙입니다.</p>
+            <p>첫 단계에서는 기반 모델을 동결해 새 헤드만 학습합니다. 검증 성능이 안정되면 상위 일부 층을 풀고 아주 낮은 학습률로 미세조정합니다. 처음부터 전체를 큰 학습률로 바꾸면 사전학습 표현이 빠르게 훼손되는 catastrophic forgetting이 생길 수 있습니다.</p>
+          `,
+          code: {
+            title: "사전학습 → 동결 → 새 헤드 → 미세조정",
+            content: `base = keras.applications.VGG16(
+    weights="imagenet",
+    include_top=False,
+    input_shape=(224, 224, 3),
+)
+base.trainable = False
+
+inputs = keras.Input((224, 224, 3))
+x = keras.applications.vgg16.preprocess_input(inputs)
+x = base(x, training=False)
+x = keras.layers.GlobalAveragePooling2D()(x)
+outputs = keras.layers.Dense(num_classes, activation="softmax")(x)
+model = keras.Model(inputs, outputs)`
+          }
+        },
+        {
+          id: "cross-modal-pattern",
+          kicker: "06 · IMAGE → TEXT",
+          title: "이미지 분류와 다음 단어 예측은 같은 학습 골격을 공유한다",
+          body: `
+            <p>입력 형식은 픽셀에서 토큰으로, 특징 추출기는 CNN에서 Embedding+LSTM으로 바뀝니다. 그러나 <strong>배치 입력 → 표현 → logits → softmax → cross-entropy → 역전파</strong>라는 학습 골격은 같습니다.</p>
+            <p>이 공통 구조를 보면 새로운 모델을 만날 때 무엇이 바뀌고 무엇이 유지되는지 분리할 수 있습니다. 데이터에 맞는 표현 장치와 출력 계약을 바꾸되, 훈련·검증·일반화의 원칙은 그대로 유지됩니다.</p>
+          `,
+          visuals: ["rnn-unfold"]
+        },
+        {
+          id: "fruit-assessment",
+          kicker: "07 · FINAL ASSESSMENT",
+          title: "과일 6종 평가는 조합 능력을 묻는다",
+          body: `
+            <p>최종 평가는 신선한 사과·오렌지·바나나와 부패한 세 종류를 구분해 검증 정확도 92% 이상을 만드는 문제입니다. 빈칸을 한 번 채우는 문제가 아니라 전이학습, 증강, 출력층과 손실, 미세조정을 상황에 맞게 조합하는 평가입니다.</p>
+            <ol>
+              <li>폴더 클래스와 출력 뉴런 6개가 정확히 대응하는지 확인합니다.</li>
+              <li>사전학습 기반을 동결하고 새 분류 헤드를 먼저 안정화합니다.</li>
+              <li>훈련 곡선과 오분류를 보고 라벨 보존 증강을 조정합니다.</li>
+              <li>필요할 때만 상위 층을 풀고 낮은 학습률로 미세조정합니다.</li>
+              <li>최고 검증 가중치를 저장하고 고정된 검증 반복자로 평가합니다.</li>
+            </ol>
+            <div class="callout warning"><span class="callout-icon">!</span><div><strong>92%는 목표이지 설명이 아닙니다.</strong><p>클래스별 혼동, 데이터 누출, 중복 이미지, 실제 배포 사진의 차이를 확인해야 숫자가 믿을 만한 성능이 됩니다.</p></div></div>
+          `
+        }
+      ],
+      interactive: {
+        type: "dli-pipeline",
+        title: "NVIDIA 실습 흐름 시뮬레이터",
+        instruction: "단계를 이동하며 데이터 모양, 모델 전략, 다음 실습을 부르는 실패 신호를 한 화면에서 연결하세요."
+      },
+      quiz: [
+        {
+          q: "ASL Dense 모델의 훈련 정확도만 높고 검증 정확도가 낮을 때 가장 자연스러운 해석은?",
+          options: ["에포크가 무조건 부족하다.", "훈련 표본을 외우고 공간 구조를 충분히 활용하지 못했다.", "클래스 수가 자동으로 감소했다."],
+          answer: 1,
+          why: "훈련–검증 간격은 과대적합 신호이며 CNN·증강·규제 같은 일반화 전략을 검토해야 합니다."
+        },
+        {
+          q: "VGG16 전이학습의 첫 단계로 적절한 것은?",
+          options: ["사전학습 가중치를 지우고 전체 층을 큰 학습률로 학습", "기반을 동결하고 새 출력 헤드를 먼저 학습", "입력 전처리를 생략"],
+          answer: 1,
+          why: "일반 시각 특징을 보존한 채 새 과업의 분류기부터 안정적으로 맞춥니다."
+        },
+        {
+          q: "6개 과일 클래스를 one-hot 라벨로 학습할 때 자연스러운 출력은?",
+          options: ["뉴런 1개와 MSE", "뉴런 6개 softmax와 categorical cross-entropy", "뉴런 224개와 sigmoid"],
+          answer: 1,
+          why: "상호 배타적인 6개 범주는 6차원 확률 분포와 범주형 교차 엔트로피가 대응합니다."
+        }
+      ],
+      sources: [
+        ["NVIDIA Deep Learning Institute", "https://www.nvidia.com/en-us/deep-learning-ai/education/"],
+        ["NVIDIA · Fundamentals of Deep Learning", "https://www.nvidia.com/content/dam/en-zz/Solutions/deep-learning/deep-learning-education/dli-fundamentals-of-deep-learning-1369828-r3-web.pdf"],
+        ["TensorFlow Transfer learning and fine-tuning", "https://www.tensorflow.org/tutorials/images/transfer_learning"],
+        ["TensorFlow Data augmentation", "https://www.tensorflow.org/tutorials/images/data_augmentation"],
+        ["Keras VGG16 and VGG19", "https://keras.io/2/api/applications/vgg/"],
+        ["Keras Transfer learning guide", "https://keras.io/guides/transfer_learning/"]
+      ]
+    },
+    {
+      id: "12-anomaly",
+      num: "12",
       phase: "frontier",
-      phaseLabel: "응용",
-      shortTitle: "이상 탐지",
+      phaseLabel: "선택 확장",
+      shortTitle: "확장 · 이상 탐지",
       title: "정상이 무엇인지 배워 낯선 것을 찾기",
-      subtitle: "라벨 유무에 따라 XGBoost·오토인코더·GAN을 선택하고, 재구성 오차·임곗값·ROC-AUC의 함정을 짚습니다.",
-      summary: "이상치 정의, XGBoost, Autoencoder, GAN, 재구성 오차, ROC-AUC",
+      subtitle: "정규 수업의 딥러닝 실습을 마친 뒤 선택적으로 확장합니다. XGBoost·오토인코더·GAN과 재구성 오차·임곗값을 연결합니다.",
+      summary: "선택 확장: XGBoost, Autoencoder, GAN, 이상 점수와 임곗값",
       question: "공격이 어떤 모습인지 몰라도 네트워크 이상을 잡을 수 있을까?",
       minutes: 58,
       keywords: ["이상탐지", "KDD99", "XGBoost", "Autoencoder", "재구성오차", "GAN", "ROC", "AUC", "불균형", "threshold", "adversarial"],
@@ -1231,6 +1528,7 @@ model.compile(
           body: `
             <p>이상치는 다른 데이터와 크게 다르거나, 정상과 다른 메커니즘에서 생긴 관측입니다. 네트워크 침입, 사기, 설비 고장, 의료 경고처럼 발견의 가치가 크지만 이상 자체가 다양하고 희귀해 라벨을 모으기 어렵습니다.</p>
             <p>먼저 <strong>point anomaly</strong>(한 점이 이상), <strong>contextual anomaly</strong>(맥락 안에서만 이상), <strong>collective anomaly</strong>(연속 패턴 전체가 이상)를 구분하세요. 한겨울 30°C는 맥락 이상이고, 짧은 요청 폭주 시퀀스는 집단 이상일 수 있습니다.</p>
+            <div class="callout"><span class="callout-icon">+</span><div><strong>이 장은 선택형 확장입니다.</strong><p>핵심 수업 흐름은 11장의 NVIDIA 딥러닝 실습에서 완결됩니다. 여기서는 고급 아키텍처에서 언급된 오토인코더·GAN을 보안 이상 탐지에 적용해 봅니다.</p></div></div>
             <div class="callout warning"><span class="callout-icon">!</span><div><strong>이상 점수와 비즈니스 사고는 같지 않습니다.</strong><p>센서 고장, 신규 고객, 합법적인 대형 거래도 통계적으로 낯설 수 있습니다. 탐지 후 조사·피드백 흐름이 필요합니다.</p></div></div>
           `
         },
@@ -1272,6 +1570,7 @@ model.compile(
             <p>오토인코더는 인코더가 입력을 낮은 차원의 잠재 표현 \\(z\\)로 압축하고, 디코더가 원래 입력을 복원합니다. 정상 데이터만 또는 정상 비율이 매우 높은 데이터로 학습하면 반복되는 정상 구조를 잘 복원합니다. 낯선 이상은 잠재 표현에 맞지 않아 재구성 오차가 커질 것이라는 가정입니다.</p>
             <p>연속 특성은 표준화하고, 범주형 특성은 one-hot/embedding으로 처리합니다. 단순 MSE는 큰 단위 특성이 점수를 지배하므로 전처리와 특성별 손실 가중치가 중요합니다. 시계열에서는 일정 길이 창을 만들고 LSTM·1D CNN 오토인코더로 패턴을 복원할 수 있습니다.</p>
           `,
+          visuals: ["autoencoder"],
           equation: {
             label: "재구성 오차 기반 이상 점수",
             tex: S`z=f_{\theta}(x),\qquad \hat x=g_{\phi}(z),\qquad s(x)=\frac{1}{d}\sum_{j=1}^{d}(x_j-\hat x_j)^2`,
@@ -1391,6 +1690,113 @@ model.compile(
       videoId: "wjZofJX0v4M",
       href: "https://www.youtube.com/watch?v=wjZofJX0v4M",
       chapter: "10 · NEXT"
+    },
+    {
+      type: "VIDEO · VISUAL GUIDE",
+      title: "Image Classification with CNNs",
+      creator: "StatQuest · Neural Networks Part 8",
+      videoId: "HGwBXDKFk9I",
+      href: "https://www.youtube.com/watch?v=HGwBXDKFk9I",
+      chapter: "09 · 11"
+    },
+    {
+      type: "VIDEO · VISUAL GUIDE",
+      title: "Recurrent Neural Networks, Clearly Explained",
+      creator: "StatQuest · Neural Networks Part 9",
+      videoId: "AsNTP8Kwu80",
+      href: "https://www.youtube.com/watch?v=AsNTP8Kwu80",
+      chapter: "10"
+    },
+    {
+      type: "VIDEO · VISUAL GUIDE",
+      title: "Long Short-Term Memory, Clearly Explained",
+      creator: "StatQuest · Neural Networks Part 10",
+      videoId: "YCzL96nL7j0",
+      href: "https://www.youtube.com/watch?v=YCzL96nL7j0",
+      chapter: "10 · 11"
+    },
+    {
+      type: "VIDEO · VISUAL GUIDE",
+      title: "Word Embedding and Word2Vec",
+      creator: "StatQuest · Neural Networks Part 11",
+      videoId: "viZrOnJclY0",
+      href: "https://www.youtube.com/watch?v=viZrOnJclY0",
+      chapter: "10"
+    }
+  ];
+
+  window.VISUALS = [
+    {
+      id: "mnist",
+      kind: "DATASET · IMAGE",
+      chapter: "08 · 11",
+      title: "MNIST 손글씨가 가진 변이",
+      description: "같은 숫자도 굵기·기울기·획의 연결이 다릅니다. 모델이 외워야 할 픽셀이 아니라 일반화해야 할 변이를 먼저 봅니다.",
+      src: "assets/visuals/mnist-samples.png",
+      alt: "MNIST 테스트 데이터에서 추출한 0부터 9까지의 다양한 손글씨 표본",
+      author: "Suvanjanprasai",
+      license: "CC BY-SA 4.0",
+      source: "https://commons.wikimedia.org/wiki/File:MNIST_dataset_example.png"
+    },
+    {
+      id: "neural-network",
+      kind: "ARCHITECTURE · SVG",
+      chapter: "08",
+      title: "층과 가중치의 계산 그래프",
+      description: "입력층, 은닉층, 출력층 사이의 연결을 보며 순전파와 역전파가 같은 그래프를 반대 방향으로 지나는 모습을 연결합니다.",
+      src: "assets/visuals/neural-network.svg",
+      alt: "입력층과 여러 은닉층, 출력층의 연결과 가중치 표기를 보여 주는 인공신경망 도식",
+      author: "QuantuMechaniX8",
+      license: "CC0 1.0",
+      source: "https://commons.wikimedia.org/wiki/File:Neural_Network.svg"
+    },
+    {
+      id: "gradient-descent",
+      kind: "ANIMATION · GIF",
+      chapter: "04 · 08",
+      title: "손실 지형을 내려가는 경사하강",
+      description: "기울기가 가리키는 반대 방향으로 반복 이동하는 모습을 통해 학습률과 수렴 경로를 정적인 수식 밖에서 확인합니다.",
+      src: "assets/visuals/gradient-descent.gif",
+      alt: "삼차원 손실 표면 위에서 경사하강 경로가 최솟값으로 이동하는 애니메이션",
+      author: "Jacopo Bertolotti",
+      license: "CC0 1.0",
+      source: "https://commons.wikimedia.org/wiki/File:Gradient_descent.gif"
+    },
+    {
+      id: "cnn-layers",
+      kind: "ARCHITECTURE · SVG",
+      chapter: "09 · 11",
+      title: "CNN의 층을 통과하는 공간 표현",
+      description: "입력 이미지가 합성곱 층과 특성맵을 거쳐 분류 표현으로 바뀌는 전체 흐름을 한 장에서 추적합니다.",
+      src: "assets/visuals/cnn-layers.svg",
+      alt: "입력 이미지가 여러 합성곱 계층과 특성맵을 통과하는 CNN 전방향 계산 도식",
+      author: "Renanar2",
+      license: "CC BY-SA 4.0",
+      source: "https://commons.wikimedia.org/wiki/File:CNN_Convolutional_Layers.svg"
+    },
+    {
+      id: "rnn-unfold",
+      kind: "ARCHITECTURE · SVG",
+      chapter: "10 · 11",
+      title: "순환을 시간축으로 펼쳐 보기",
+      description: "한 셀의 순환 표현과 여러 시점으로 펼친 표현을 나란히 보며 상태 전달과 시간축 가중치 공유를 이해합니다.",
+      src: "assets/visuals/rnn-unfold.svg",
+      alt: "하나의 RNN 순환 셀과 시간축으로 펼친 입력, 은닉 상태, 출력의 연결 도식",
+      author: "fdeloche",
+      license: "CC BY-SA 4.0",
+      source: "https://commons.wikimedia.org/wiki/File:Recurrent_neural_network_unfold.svg"
+    },
+    {
+      id: "autoencoder",
+      kind: "ARCHITECTURE · IMAGE",
+      chapter: "12",
+      title: "압축과 복원 사이의 병목",
+      description: "인코더가 입력을 잠재 표현으로 줄이고 디코더가 복원하는 대칭 구조에서 재구성 오차가 생기는 위치를 봅니다.",
+      src: "assets/visuals/autoencoder.png",
+      alt: "입력층에서 잠재 공간으로 압축한 뒤 출력층으로 복원하는 오토인코더 구조",
+      author: "Chervinskii",
+      license: "CC BY-SA 4.0",
+      source: "https://commons.wikimedia.org/wiki/File:Autoencoder_structure.png"
     }
   ];
 })();

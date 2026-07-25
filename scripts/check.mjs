@@ -46,8 +46,10 @@ const dataSource = await readFile(join(root, "data.js"), "utf8");
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox);
 const chapters = sandbox.window.CHAPTERS;
-if (!Array.isArray(chapters) || chapters.length !== 11) {
-  errors.push(`장 수가 11개가 아님: ${chapters?.length}`);
+const visuals = sandbox.window.VISUALS;
+const media = sandbox.window.MEDIA;
+if (!Array.isArray(chapters) || chapters.length !== 12) {
+  errors.push(`장 수가 12개가 아님: ${chapters?.length}`);
 } else {
   const ids = new Set(chapters.map(chapter => chapter.id));
   if (ids.size !== chapters.length) errors.push("중복 chapter id가 있음");
@@ -59,6 +61,26 @@ if (!Array.isArray(chapters) || chapters.length !== 11) {
       if (!label || !/^https:\/\//.test(url)) errors.push(`잘못된 출처 링크: ${chapter.id} ${url}`);
     });
   });
+}
+
+if (!Array.isArray(visuals) || visuals.length < 6) {
+  errors.push(`공개 시각 자료가 6개 미만임: ${visuals?.length}`);
+} else {
+  for (const visual of visuals) {
+    if (!visual.id || !visual.src || !visual.source || !visual.author || !visual.license) {
+      errors.push(`불완전한 시각 자료 메타데이터: ${visual?.id}`);
+      continue;
+    }
+    try {
+      await stat(resolve(root, visual.src));
+    } catch {
+      errors.push(`시각 자료 파일 없음: ${visual.src}`);
+    }
+  }
+}
+
+if (!Array.isArray(media) || media.length < 10) {
+  errors.push(`공개 영상이 10개 미만임: ${media?.length}`);
 }
 
 if (errors.length) {

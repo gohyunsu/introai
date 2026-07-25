@@ -827,6 +827,107 @@ svg {
   word-break: keep-all;
 }
 
+.visual-section {
+  padding-block: 110px;
+}
+
+.visual-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.visual-card {
+  display: grid;
+  min-width: 0;
+  grid-column: span 4;
+  grid-template-rows: 260px auto;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.visual-card-wide {
+  grid-column: span 8;
+}
+
+.visual-card-image {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  place-items: center;
+  padding: 22px;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    color-mix(in srgb, var(--paper-2) 66%, var(--white));
+  background-size: 32px 32px;
+}
+
+.visual-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .35s ease;
+}
+
+.visual-card:hover .visual-card-image img {
+  transform: scale(1.025);
+}
+
+.visual-card-image > span {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: var(--ink);
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .08em;
+}
+
+.visual-card figcaption {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.visual-card figcaption > span {
+  color: var(--coral);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .1em;
+}
+
+.visual-card h3 {
+  margin: 8px 0;
+  font-size: 20px;
+  letter-spacing: -.035em;
+}
+
+.visual-card p {
+  margin: 0 0 16px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.visual-card figcaption a {
+  margin-top: auto;
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 8px;
+  text-decoration: none;
+}
+
 .media-section {
   border-block: 1px solid var(--line);
   background: var(--paper-2);
@@ -922,7 +1023,7 @@ svg {
 .resource-strip {
   display: grid;
   margin-top: 16px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--white);
@@ -1731,6 +1832,67 @@ svg {
 .code-fn { color: #e8ff64; }
 .code-string { color: #91b9ff; }
 
+.lesson-visuals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 32px 0;
+}
+
+.lesson-visuals.single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lesson-visual {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+}
+
+.lesson-visual > a {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    color-mix(in srgb, var(--paper-2) 62%, var(--white));
+  background-size: 34px 34px;
+}
+
+.lesson-visual img {
+  width: 100%;
+  max-height: 390px;
+  object-fit: contain;
+}
+
+.lesson-visual figcaption {
+  display: grid;
+  gap: 5px;
+  border-top: 1px solid var(--line);
+  padding: 16px 18px 18px;
+}
+
+.lesson-visual figcaption strong {
+  font-size: 13px;
+}
+
+.lesson-visual figcaption span {
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.lesson-visual figcaption a {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 8px;
+  text-decoration: none;
+}
+
 .interactive-panel {
   overflow: hidden;
   margin: 34px 0;
@@ -2090,8 +2252,9 @@ body.focus-mode .lesson-main {
   .rhythm-grid article:nth-child(2) { border-right: 0; }
   .rhythm-grid article:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .resource-strip { grid-template-columns: repeat(2, 1fr); }
-  .resource-strip a:nth-child(2) { border-right: 0; }
-  .resource-strip a:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .resource-strip a { border-bottom: 1px solid var(--line); }
+  .resource-strip a:nth-child(even) { border-right: 0; }
+  .resource-strip a:last-child { grid-column: 1 / -1; border-right: 0; border-bottom: 0; }
   .lesson-layout { grid-template-columns: 240px minmax(0, 1fr); }
   .chapter-sidebar { width: 240px; }
   .on-this-page { display: none; }
@@ -2123,6 +2286,8 @@ body.focus-mode .lesson-main {
   .flow-section, .rhythm-section, .media-section > .section-shell { padding-block: 90px; }
   .section-heading { grid-template-columns: 1fr; gap: 25px; margin-bottom: 45px; }
   .chapter-card, .chapter-card.featured { grid-column: span 12; }
+  .visual-card,
+  .visual-card-wide { grid-column: span 6; }
   .bridge-grid { grid-template-columns: 1fr; gap: 45px; }
   .bridge-lab canvas { min-height: 390px; }
   .media-grid { grid-template-columns: 1fr; }
@@ -2162,6 +2327,7 @@ body.focus-mode .lesson-main {
   .interactive-body { grid-template-columns: 1fr; }
   .interactive-controls { border-top: 1px solid var(--line); border-left: 0; }
   .concept-grid { grid-template-columns: 1fr; }
+  .lesson-visuals { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 540px) {
@@ -2174,6 +2340,8 @@ body.focus-mode .lesson-main {
   .hero-visual { min-height: 440px; border-radius: 24px; }
   .hero-legend { flex-wrap: wrap; }
   .phase-tabs { width: 100%; border-radius: 15px; }
+  .visual-card,
+  .visual-card-wide { grid-column: span 12; grid-template-rows: 220px auto; }
   .chapter-card { min-height: 310px; padding: 22px; }
   .rhythm-grid { grid-template-columns: 1fr; }
   .rhythm-grid article { border-right: 0; border-bottom: 1px solid var(--line); }

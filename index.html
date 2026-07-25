@@ -8,13 +8,13 @@
       content="서울대학교 AI 입문 수업의 흐름을 데이터, 모델, 학습, 표현의 연결로 이해하는 인터랙티브 학습 사이트"
     />
     <meta name="theme-color" content="#f4f1e8" />
-    <meta property="og:title" content="AI, 연결해서 이해하기" />
+    <meta property="og:title" content="Introduction to AI" />
     <meta
       property="og:description"
       content="K-NN에서 CNN·RNN·생성 모델까지, 질문이 다음 개념으로 이어지는 AI 입문 학습 지도"
     />
     <meta property="og:image" content="assets/og-cover.svg" />
-    <title>AI, 연결해서 이해하기</title>
+    <title>Introduction to AI</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,10 +23,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=viewport-final" />
-    <script defer src="data.js"></script>
-    <script defer src="interactives.js"></script>
-    <script defer src="app.js?v=responsive-final"></script>
+    <link rel="stylesheet" href="styles.css?v=dli-refresh" />
+    <script defer src="data.js?v=dli-refresh"></script>
+    <script defer src="interactives.js?v=dli-refresh"></script>
+    <script defer src="app.js?v=dli-refresh"></script>
   </head>
   <body data-page="home">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -34,7 +34,7 @@
       <a class="brand" href="index.html" aria-label="홈으로">
         <span class="brand-mark" aria-hidden="true">A</span>
         <span>
-          <strong>AI, 연결해서 이해하기</strong>
+          <strong>Introduction to AI</strong>
           <small>INTRODUCTION TO AI</small>
         </span>
       </a>
@@ -73,10 +73,10 @@
             </button>
           </div>
           <dl class="hero-stats" aria-label="사이트 구성">
-            <div><dt>10</dt><dd>정규 강의</dd></div>
-            <div><dt>321</dt><dd>페이지 분석</dd></div>
-            <div><dt>11</dt><dd>인터랙티브 장</dd></div>
-            <div><dt>33</dt><dd>셀프체크</dd></div>
+            <div><dt>516</dt><dd>페이지 분석</dd></div>
+            <div><dt>20</dt><dd>실습 노트북</dd></div>
+            <div><dt>12</dt><dd>인터랙티브 장</dd></div>
+            <div><dt>36</dt><dd>셀프체크</dd></div>
           </dl>
         </div>
         <div class="hero-visual" aria-label="AI 학습 흐름 시각화">
@@ -109,11 +109,11 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">THE WHOLE COURSE, ONE FLOW</p>
-            <h2>열 개의 강의를<br />네 번의 관점 전환으로</h2>
+            <h2>강의와 실습을<br />네 번의 관점 전환으로</h2>
           </div>
           <p>
-            각 단계의 마지막 질문이 다음 단계의 출발점입니다. 카드를 눌러
-            세부 개념, 수식, 실습과 셀프체크로 들어가세요.
+            정규 강의와 NVIDIA 딥러닝 실습을 하나의 인과적 흐름으로 엮었습니다.
+            각 단계의 마지막 질문에서 다음 개념·수식·실습으로 들어가세요.
           </p>
         </div>
         <div class="phase-tabs" role="tablist" aria-label="학습 단계 필터">
@@ -121,7 +121,7 @@
           <button class="phase-tab" data-phase="foundation" role="tab" aria-selected="false">01 기반</button>
           <button class="phase-tab" data-phase="classical" role="tab" aria-selected="false">02 고전 ML</button>
           <button class="phase-tab" data-phase="deep" role="tab" aria-selected="false">03 딥러닝</button>
-          <button class="phase-tab" data-phase="frontier" role="tab" aria-selected="false">04 응용</button>
+          <button class="phase-tab" data-phase="frontier" role="tab" aria-selected="false">04 선택 확장</button>
         </div>
         <div class="chapter-grid" data-chapter-grid></div>
       </section>
@@ -153,6 +153,21 @@
             <p>빈 공간을 눌러 새 표본을 추가하고 세 모델의 판단 방식을 비교해 보세요.</p>
           </div>
         </div>
+      </section>
+
+      <section class="section-shell visual-section" id="visual-atlas">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SEE THE COMPUTATION</p>
+            <h2>말로 읽은 개념을<br />한 장면으로 다시 보기</h2>
+          </div>
+          <p>
+            손글씨 픽셀에서 CNN의 층, 경사하강의 움직임, 시간축으로 펼친 RNN까지
+            공개 라이선스 자료를 강의 흐름에 맞춰 배치했습니다. 각 카드에서 원본과
+            저작자·라이선스를 바로 확인할 수 있습니다.
+          </p>
+        </div>
+        <div class="visual-grid" data-visual-grid></div>
       </section>
 
       <section class="section-shell rhythm-section">
@@ -224,6 +239,11 @@
               <strong>Keras Developer Guides</strong>
               <i aria-hidden="true">↗</i>
             </a>
+            <a href="https://www.nvidia.com/en-us/deep-learning-ai/education/" target="_blank" rel="noreferrer">
+              <span>HANDS-ON TRAINING</span>
+              <strong>NVIDIA Deep Learning Institute</strong>
+              <i aria-hidden="true">↗</i>
+            </a>
           </div>
         </div>
       </section>
@@ -248,14 +268,14 @@
       <div class="footer-brand">
         <span class="brand-mark" aria-hidden="true">A</span>
         <p>
-          <strong>AI, 연결해서 이해하기</strong>
+          <strong>Introduction to AI</strong>
           <span>학습을 위한 비공식 보조 사이트</span>
         </p>
       </div>
       <p class="privacy-note">
         원본 강의자료·실습 파일은 포함하지 않습니다. 설명과 시각화는 학습 흐름을 바탕으로 새로 구성했습니다.
       </p>
-      <a href="learn.html?chapter=11-anomaly">마지막 장으로 이동 ↗</a>
+      <a href="learn.html?chapter=12-anomaly">확장 장으로 이동 ↗</a>
     </footer>
 
     <div class="search-dialog" data-search-dialog hidden>

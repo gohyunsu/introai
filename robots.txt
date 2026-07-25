@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gohyunsu.github.io/introai/sitemap.xml
+Sitemap: https://gohyunsu.github.io/introduction-to-ai/sitemap.xml

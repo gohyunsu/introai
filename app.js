@@ -1,6 +1,7 @@
 (() => {
   const chapters = window.CHAPTERS || [];
   const media = window.MEDIA || [];
+  const visuals = window.VISUALS || [];
   const PROGRESS_KEY = "introai-course-progress-v1";
   const LAST_KEY = "introai-last-chapter-v1";
 
@@ -74,7 +75,7 @@
       foundation: "FOUNDATION",
       classical: "CLASSICAL ML",
       deep: "DEEP LEARNING",
-      frontier: "APPLICATION"
+      frontier: "EXTENSION"
     }[phase] || phase;
   }
 
@@ -129,6 +130,25 @@
         </a>`).join("");
     }
 
+    const visualGrid = $("[data-visual-grid]");
+    if (visualGrid) {
+      visualGrid.innerHTML = visuals.map((item, index) => `
+        <figure class="visual-card ${index === 0 || index === 3 || index === 5 ? "visual-card-wide" : ""}">
+          <a class="visual-card-image" href="${item.source}" target="_blank" rel="noreferrer">
+            <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" />
+            <span>${item.kind}</span>
+          </a>
+          <figcaption>
+            <span>CH ${item.chapter}</span>
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <a href="${item.source}" target="_blank" rel="noreferrer">
+              ${item.author} · ${item.license} ↗
+            </a>
+          </figcaption>
+        </figure>`).join("");
+    }
+
     const lastId = localStorage.getItem(LAST_KEY);
     const last = chapters.find(chapter => chapter.id === lastId);
     const resume = $(".resume-button");
@@ -163,12 +183,36 @@
       </div>`;
   }
 
+  function renderSourceVisuals(ids = []) {
+    const selected = ids
+      .map(id => visuals.find(item => item.id === id))
+      .filter(Boolean);
+    if (!selected.length) return "";
+    return `
+      <div class="lesson-visuals ${selected.length === 1 ? "single" : ""}">
+        ${selected.map(item => `
+          <figure class="lesson-visual">
+            <a href="${item.source}" target="_blank" rel="noreferrer">
+              <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" />
+            </a>
+            <figcaption>
+              <strong>${item.title}</strong>
+              <span>${item.description}</span>
+              <a href="${item.source}" target="_blank" rel="noreferrer">
+                ${item.author} · ${item.license} ↗
+              </a>
+            </figcaption>
+          </figure>`).join("")}
+      </div>`;
+  }
+
   function renderSection(section, index) {
     return `
       <section class="lesson-section" id="${section.id}">
         <p class="section-kicker">${section.kicker || String(index + 1).padStart(2, "0")}</p>
         <h2>${section.title}</h2>
         <div class="prose">${section.body || ""}</div>
+        ${renderSourceVisuals(section.visuals)}
         ${renderEquation(section.equation)}
         ${renderCode(section.code)}
       </section>`;
@@ -237,7 +281,7 @@
     if (index < 0) index = 0;
     const chapter = chapters[index];
     localStorage.setItem(LAST_KEY, chapter.id);
-    document.title = `${chapter.shortTitle} · AI, 연결해서 이해하기`;
+    document.title = `${chapter.shortTitle} · Introduction to AI`;
     const completed = getProgress();
 
     root.innerHTML = `
