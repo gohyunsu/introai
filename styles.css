@@ -2104,11 +2104,11 @@ body.focus-mode .lesson-main {
   .brand small, .nav-link, .search-trigger kbd { display: none; }
   .hero { min-width: 0; min-height: 0; grid-template-columns: minmax(0, 1fr); padding-block: 60px 40px; }
   .hero-copy, .hero h1, .hero-lede, .hero-visual { min-width: 0; max-width: 100%; }
-  .hero-copy { width: 100%; padding-inline: 5px; }
-  .hero h1 { width: 100%; overflow-wrap: anywhere; word-break: normal; font-size: clamp(36px, 9.5vw, 52px); }
-  .hero h1 br { display: none; }
+  .hero-copy { width: 100%; padding-inline: 5px 16px; }
+  .hero h1 { width: 100%; overflow-wrap: anywhere; word-break: keep-all; font-size: clamp(36px, 9.5vw, 52px); }
+  .hero h1 br { display: initial; }
   .hero h1 em { white-space: normal; }
-  .hero-lede { width: 100%; overflow-wrap: anywhere; word-break: normal; font-size: 15px; }
+  .hero-lede { width: 100%; overflow-wrap: anywhere; word-break: keep-all; font-size: 15px; }
   .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
   .hero-visual { min-height: 500px; }
   .flow-section, .rhythm-section, .media-section > .section-shell { padding-block: 90px; }
@@ -2158,7 +2158,7 @@ body.focus-mode .lesson-main {
 @media (max-width: 540px) {
   .brand strong { font-size: 12px; }
   .brand-mark { width: 35px; height: 35px; }
-  .hero h1 { letter-spacing: -.07em; }
+  .hero h1 { font-size: clamp(32px, 8.7vw, 40px); letter-spacing: -.07em; }
   .hero-lede { line-height: 1.75; }
   .hero-cta { align-items: stretch; flex-direction: column; }
   .button { width: 100%; }
