@@ -252,7 +252,7 @@ svg {
 
 .hero {
   display: grid;
-  min-height: calc(100vh - var(--header-h));
+  min-height: min(900px, calc(100vh - var(--header-h)));
   grid-template-columns: 1.02fr 0.98fr;
   align-items: center;
   gap: 56px;
