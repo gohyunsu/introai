@@ -496,5 +496,27 @@
       initLessonTools();
     }
     initSearch();
+    if (new URLSearchParams(location.search).has("layoutdebug")) {
+      const hero = $(".hero");
+      const copy = $(".hero-copy");
+      const button = $(".hero-cta .button");
+      const read = element => element
+        ? `${Math.round(element.getBoundingClientRect().x)}, ${Math.round(element.getBoundingClientRect().width)}`
+        : "—";
+      const panel = document.createElement("pre");
+      panel.textContent = [
+        `inner ${innerWidth}`,
+        `client ${document.documentElement.clientWidth}`,
+        `scroll ${document.documentElement.scrollWidth}`,
+        `hero x,w ${read(hero)}`,
+        `copy x,w ${read(copy)}`,
+        `button x,w ${read(button)}`
+      ].join("\n");
+      Object.assign(panel.style, {
+        position: "fixed", zIndex: "9999", top: "70px", right: "8px",
+        padding: "8px", background: "#fff", color: "#000", font: "12px monospace"
+      });
+      document.body.append(panel);
+    }
   });
 })();
