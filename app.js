@@ -513,7 +513,7 @@
         `button x,w ${read(button)}`
       ].join("\n");
       Object.assign(panel.style, {
-        position: "fixed", zIndex: "9999", top: "70px", right: "8px",
+        position: "fixed", zIndex: "9999", top: "70px", left: "8px",
         padding: "8px", background: "#fff", color: "#000", font: "12px monospace"
       });
       document.body.append(panel);
