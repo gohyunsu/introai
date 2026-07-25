@@ -2105,10 +2105,10 @@ body.focus-mode .lesson-main {
   .hero { min-width: 0; min-height: 0; grid-template-columns: minmax(0, 1fr); padding-block: 60px 40px; }
   .hero-copy, .hero h1, .hero-lede, .hero-visual { min-width: 0; max-width: 100%; }
   .hero-copy { width: 100%; padding-inline: 5px; }
-  .hero h1 { width: 100%; overflow-wrap: anywhere; font-size: clamp(40px, 10.5vw, 58px); }
+  .hero h1 { width: 100%; overflow-wrap: anywhere; word-break: normal; font-size: clamp(36px, 9.5vw, 52px); }
   .hero h1 br { display: none; }
   .hero h1 em { white-space: normal; }
-  .hero-lede { width: 100%; overflow-wrap: anywhere; font-size: 16px; }
+  .hero-lede { width: 100%; overflow-wrap: anywhere; word-break: normal; font-size: 15px; }
   .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
   .hero-visual { min-height: 500px; }
   .flow-section, .rhythm-section, .media-section > .section-shell { padding-block: 90px; }
