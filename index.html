@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="서울대학교 AI 입문 수업의 흐름을 데이터, 모델, 학습, 표현의 연결로 이해하는 인터랙티브 학습 사이트"
+    />
+    <meta name="theme-color" content="#f4f1e8" />
+    <meta property="og:title" content="AI, 연결해서 이해하기" />
+    <meta
+      property="og:description"
+      content="K-NN에서 CNN·RNN·생성 모델까지, 질문이 다음 개념으로 이어지는 AI 입문 학습 지도"
+    />
+    <meta property="og:image" content="assets/og-cover.svg" />
+    <title>AI, 연결해서 이해하기</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="data.js"></script>
+    <script defer src="interactives.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>
+          <strong>AI, 연결해서 이해하기</strong>
+          <small>INTRODUCTION TO AI</small>
+        </span>
+      </a>
+      <nav class="header-actions" aria-label="주요 메뉴">
+        <a class="nav-link" href="#roadmap">학습 지도</a>
+        <a class="nav-link" href="#media">더 알아보기</a>
+        <button class="icon-button search-trigger" type="button" aria-label="검색 열기">
+          <span aria-hidden="true">⌕</span><kbd>⌘ K</kbd>
+        </button>
+        <button class="icon-button theme-toggle" type="button" aria-label="색상 모드 전환">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero section-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse-dot"></span> SNU · AI INTRO COMPANION</p>
+          <h1>
+            AI는 알고리즘 목록이 아니라<br />
+            <em>이어지는 질문</em>이다.
+          </h1>
+          <p class="hero-lede">
+            왜 데이터를 나누는지, 왜 스케일을 맞추는지, 왜 층을 깊게 쌓는지.
+            한 개념이 다음 개념을 필요로 하는 순간을 따라가면 머신러닝부터
+            생성 모델까지 하나의 지도로 연결됩니다.
+          </p>
+          <div class="hero-cta">
+            <a class="button button-primary" href="learn.html?chapter=01-ai-map">
+              첫 질문에서 시작하기 <span aria-hidden="true">↗</span>
+            </a>
+            <button class="button button-ghost resume-button" type="button" hidden>
+              이어서 학습하기 <span class="resume-label"></span>
+            </button>
+          </div>
+          <dl class="hero-stats" aria-label="사이트 구성">
+            <div><dt>10</dt><dd>정규 강의</dd></div>
+            <div><dt>321</dt><dd>페이지 분석</dd></div>
+            <div><dt>11</dt><dd>인터랙티브 장</dd></div>
+            <div><dt>33</dt><dd>셀프체크</dd></div>
+          </dl>
+        </div>
+        <div class="hero-visual" aria-label="AI 학습 흐름 시각화">
+          <div class="map-caption">
+            <span>LEARNING THREAD</span>
+            <span class="live-label">LIVE MAP</span>
+          </div>
+          <canvas id="hero-map" width="720" height="620"></canvas>
+          <div class="hero-legend">
+            <span><i class="legend-dot c-data"></i> 데이터</span>
+            <span><i class="legend-dot c-model"></i> 모델</span>
+            <span><i class="legend-dot c-deep"></i> 표현 학습</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="question-ribbon" aria-label="핵심 질문">
+        <div class="marquee-track">
+          <span>데이터는 세상을 대표하는가?</span><i>✦</i>
+          <span>좋은 모델은 무엇인가?</span><i>✦</i>
+          <span>학습과 암기는 어떻게 다른가?</span><i>✦</i>
+          <span>표현은 누가 설계하는가?</span><i>✦</i>
+          <span>정답이 없을 때 무엇을 학습하는가?</span><i>✦</i>
+          <span>데이터는 세상을 대표하는가?</span><i>✦</i>
+          <span>좋은 모델은 무엇인가?</span><i>✦</i>
+        </div>
+      </section>
+
+      <section class="section-shell flow-section" id="roadmap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THE WHOLE COURSE, ONE FLOW</p>
+            <h2>열 개의 강의를<br />네 번의 관점 전환으로</h2>
+          </div>
+          <p>
+            각 단계의 마지막 질문이 다음 단계의 출발점입니다. 카드를 눌러
+            세부 개념, 수식, 실습과 셀프체크로 들어가세요.
+          </p>
+        </div>
+        <div class="phase-tabs" role="tablist" aria-label="학습 단계 필터">
+          <button class="phase-tab is-active" data-phase="all" role="tab" aria-selected="true">전체</button>
+          <button class="phase-tab" data-phase="foundation" role="tab" aria-selected="false">01 기반</button>
+          <button class="phase-tab" data-phase="classical" role="tab" aria-selected="false">02 고전 ML</button>
+          <button class="phase-tab" data-phase="deep" role="tab" aria-selected="false">03 딥러닝</button>
+          <button class="phase-tab" data-phase="frontier" role="tab" aria-selected="false">04 응용</button>
+        </div>
+        <div class="chapter-grid" data-chapter-grid></div>
+      </section>
+
+      <section class="concept-bridge">
+        <div class="section-shell bridge-grid">
+          <div class="bridge-copy">
+            <p class="eyebrow light">ONE QUESTION, THREE MODELS</p>
+            <h2>“이 점은 어느 그룹일까?”</h2>
+            <p>
+              같은 데이터라도 K-NN은 이웃을 보고, 로지스틱 회귀는 경계를
+              만들고, 신경망은 경계를 만들 표현 자체를 학습합니다.
+            </p>
+            <div class="segmented-control" role="group" aria-label="모델 선택">
+              <button class="is-active" data-boundary-model="knn">K-NN</button>
+              <button data-boundary-model="linear">Logistic</button>
+              <button data-boundary-model="neural">Neural net</button>
+            </div>
+            <div class="bridge-explanation" aria-live="polite">
+              가까운 샘플의 다수결. 훈련은 빠르지만 예측 때 모든 데이터를 기억합니다.
+            </div>
+          </div>
+          <div class="bridge-lab">
+            <div class="lab-toolbar">
+              <span>DECISION BOUNDARY LAB</span>
+              <button type="button" data-boundary-reset>다시 만들기</button>
+            </div>
+            <canvas id="boundary-lab" width="720" height="520"></canvas>
+            <p>빈 공간을 눌러 새 표본을 추가하고 세 모델의 판단 방식을 비교해 보세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell rhythm-section">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">A REPEATABLE STUDY RHYTHM</p>
+            <h2>읽고, 움직이고, 설명한다</h2>
+          </div>
+        </div>
+        <div class="rhythm-grid">
+          <article>
+            <span class="rhythm-number">01</span>
+            <div class="rhythm-icon" aria-hidden="true">◒</div>
+            <h3>직관을 먼저 잡기</h3>
+            <p>수식 전에 “무엇을, 왜 계산하는가”를 일상 언어와 그림으로 이해합니다.</p>
+          </article>
+          <article>
+            <span class="rhythm-number">02</span>
+            <div class="rhythm-icon" aria-hidden="true">⌁</div>
+            <h3>파라미터를 움직이기</h3>
+            <p>k, 학습률, 규제 강도, 임곗값을 직접 바꿔 결과가 달라지는 이유를 관찰합니다.</p>
+          </article>
+          <article>
+            <span class="rhythm-number">03</span>
+            <div class="rhythm-icon" aria-hidden="true">↳</div>
+            <h3>코드로 대응시키기</h3>
+            <p>개념을 scikit-learn과 Keras의 fit–evaluate–predict 흐름에 연결합니다.</p>
+          </article>
+          <article>
+            <span class="rhythm-number">04</span>
+            <div class="rhythm-icon" aria-hidden="true">?</div>
+            <h3>내 말로 회수하기</h3>
+            <p>셀프체크와 한 문장 요약으로 “안다고 느끼는 상태”를 “설명할 수 있는 상태”로 바꿉니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="media-section" id="media">
+        <div class="section-shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">WATCH · PLAY · READ</p>
+              <h2>좋은 설명을<br />옆에 두기</h2>
+            </div>
+            <p>
+              강의 흐름을 더 단단하게 해 줄 공개 자료입니다. 영상은 미리보기만
+              불러오며, 재생할 때 YouTube의 개인정보 보호 모드로 연결됩니다.
+            </p>
+          </div>
+          <div class="media-grid" data-media-grid></div>
+          <div class="resource-strip">
+            <a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noreferrer">
+              <span>INTERACTIVE COURSE</span>
+              <strong>Google ML Crash Course</strong>
+              <i aria-hidden="true">↗</i>
+            </a>
+            <a href="https://playground.tensorflow.org/" target="_blank" rel="noreferrer">
+              <span>PLAYGROUND</span>
+              <strong>TensorFlow Playground</strong>
+              <i aria-hidden="true">↗</i>
+            </a>
+            <a href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noreferrer">
+              <span>REFERENCE</span>
+              <strong>scikit-learn User Guide</strong>
+              <i aria-hidden="true">↗</i>
+            </a>
+            <a href="https://keras.io/guides/" target="_blank" rel="noreferrer">
+              <span>DEEP LEARNING</span>
+              <strong>Keras Developer Guides</strong>
+              <i aria-hidden="true">↗</i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell finish-section">
+        <div class="finish-card">
+          <div>
+            <p class="eyebrow light">START WITH THE FIRST WHY</p>
+            <h2>모델보다 먼저,<br />문제를 정의하는 법부터.</h2>
+          </div>
+          <a class="button button-light" href="learn.html?chapter=01-ai-map">
+            학습 시작 <span aria-hidden="true">→</span>
+          </a>
+          <div class="finish-orbit" aria-hidden="true">
+            <span>DATA</span><span>MODEL</span><span>LOSS</span><span>REPRESENTATION</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-shell">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <p>
+          <strong>AI, 연결해서 이해하기</strong>
+          <span>학습을 위한 비공식 보조 사이트</span>
+        </p>
+      </div>
+      <p class="privacy-note">
+        원본 강의자료·실습 파일은 포함하지 않습니다. 설명과 시각화는 학습 흐름을 바탕으로 새로 구성했습니다.
+      </p>
+      <a href="learn.html?chapter=11-anomaly">마지막 장으로 이동 ↗</a>
+    </footer>
+
+    <div class="search-dialog" data-search-dialog hidden>
+      <div class="search-backdrop" data-search-close></div>
+      <section role="dialog" aria-modal="true" aria-labelledby="search-title">
+        <div class="search-input-wrap">
+          <span aria-hidden="true">⌕</span>
+          <label class="sr-only" for="site-search" id="search-title">사이트 검색</label>
+          <input id="site-search" type="search" placeholder="개념, 수식, 알고리즘 검색…" autocomplete="off" />
+          <kbd>ESC</kbd>
+        </div>
+        <div class="search-results" data-search-results></div>
+        <p class="search-hint">↑↓ 이동 · Enter 열기 · Esc 닫기</p>
+      </section>
+    </div>
+  </body>
+</html>

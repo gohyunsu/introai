@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f3f0e7"/>
+  <circle cx="1025" cy="84" r="220" fill="#e8ff64"/>
+  <circle cx="1080" cy="500" r="240" fill="#ff8066"/>
+  <path d="M720 87C895 220 756 401 989 522" fill="none" stroke="#171813" stroke-width="2" stroke-dasharray="8 10"/>
+  <g fill="#171813">
+    <circle cx="720" cy="87" r="18"/><circle cx="797" cy="186" r="13"/><circle cx="780" cy="305" r="17"/>
+    <circle cx="860" cy="411" r="12"/><circle cx="989" cy="522" r="19"/>
+  </g>
+  <text x="84" y="110" font-family="Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="5">INTRODUCTION TO AI</text>
+  <text x="80" y="255" font-family="Arial, sans-serif" font-size="80" font-weight="800" fill="#171813">AI는 알고리즘 목록이 아니라</text>
+  <text x="80" y="350" font-family="Arial, sans-serif" font-size="88" font-weight="800" fill="#171813">이어지는 질문이다.</text>
+  <text x="86" y="445" font-family="Arial, sans-serif" font-size="28" fill="#55584e">데이터에서 생성 모델까지, 하나의 학습 지도로 연결하기</text>
+  <rect x="84" y="505" width="240" height="52" rx="26" fill="#171813"/>
+  <text x="204" y="539" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#f3f0e7">SNU · AI INTRO</text>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "AI, 연결해서 이해하기",
+  "short_name": "AI Intro",
+  "description": "AI 입문 수업의 흐름을 연결해 이해하는 인터랙티브 학습 지도",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f0e7",
+  "theme_color": "#f3f0e7",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

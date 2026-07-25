@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://gohyunsu.github.io/introai/</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=01-ai-map</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=02-ml-knn</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=03-data</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=04-regression</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=05-classification</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=06-trees</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=07-unsupervised</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=08-deep-learning</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=09-cnn</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=10-rnn</loc></url>
+  <url><loc>https://gohyunsu.github.io/introai/learn.html?chapter=11-anomaly</loc></url>
+</urlset>

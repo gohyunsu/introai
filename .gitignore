@@ -1,0 +1,25 @@
+# Dependencies and build output
+node_modules/
+dist/
+.DS_Store
+
+# Never publish original course or practice materials
+*.pdf
+*.ppt
+*.pptx
+*.ipynb
+*.zip
+*.csv
+*.npy
+*.h5
+*.keras
+*.pkl
+*.joblib
+
+# Local notes and environments
+.env*
+!.env.example
+private/
+course-materials/
+lecture-notes/
+anomaly-detection/

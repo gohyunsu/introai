@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f1e8" />
+    <meta name="description" content="AI 입문 개념을 직관, 수식, 코드, 인터랙티브 실험으로 학습합니다." />
+    <title>학습하기 · AI, 연결해서 이해하기</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsxU7P1X8H7jbO4Jfr5HVb4pMV3F"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+      integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6/rnKkD0Q8XlWHuTgQMQ8jq6rWQCK"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      integrity="sha384-43gviWU0YVja2ROJxKpP7Lda0/7I6jPGeF6AVpo1MNo9GZfAeNDf9JWQHoxdR7QK"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="data.js"></script>
+    <script defer src="interactives.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body data-page="learn">
+    <a class="skip-link" href="#lesson-main">본문으로 건너뛰기</a>
+    <header class="site-header lesson-header" data-header>
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>
+          <strong>AI, 연결해서 이해하기</strong>
+          <small>INTRODUCTION TO AI</small>
+        </span>
+      </a>
+      <div class="lesson-progress" aria-label="전체 학습 진행률">
+        <span>COURSE PROGRESS</span>
+        <div><i data-course-progress></i></div>
+        <b data-course-progress-label>0%</b>
+      </div>
+      <nav class="header-actions" aria-label="학습 도구">
+        <button class="icon-button search-trigger" type="button" aria-label="검색 열기">
+          <span aria-hidden="true">⌕</span><kbd>⌘ K</kbd>
+        </button>
+        <button class="icon-button focus-toggle" type="button" aria-label="집중 모드 전환">
+          <span aria-hidden="true">◫</span>
+        </button>
+        <button class="icon-button theme-toggle" type="button" aria-label="색상 모드 전환">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+      </nav>
+    </header>
+
+    <div class="lesson-layout">
+      <aside class="chapter-sidebar" aria-label="강의 목차">
+        <div class="sidebar-head">
+          <span>COURSE MAP</span>
+          <button type="button" class="sidebar-close" aria-label="목차 닫기">×</button>
+        </div>
+        <nav data-sidebar-chapters></nav>
+        <div class="sidebar-foot">
+          <span>KEY</span>
+          <p><i class="status-dot complete"></i> 완료 <i class="status-dot current"></i> 학습 중</p>
+        </div>
+      </aside>
+
+      <main id="lesson-main" class="lesson-main">
+        <button type="button" class="mobile-toc-button" aria-label="강의 목차 열기">목차 <span>☰</span></button>
+        <article data-lesson-content></article>
+      </main>
+
+      <aside class="on-this-page" aria-label="이 페이지의 목차">
+        <span>ON THIS PAGE</span>
+        <nav data-page-toc></nav>
+        <div class="reading-meter">
+          <span>READING</span>
+          <strong data-reading-progress>0%</strong>
+        </div>
+      </aside>
+    </div>
+
+    <div class="search-dialog" data-search-dialog hidden>
+      <div class="search-backdrop" data-search-close></div>
+      <section role="dialog" aria-modal="true" aria-labelledby="search-title">
+        <div class="search-input-wrap">
+          <span aria-hidden="true">⌕</span>
+          <label class="sr-only" for="site-search" id="search-title">사이트 검색</label>
+          <input id="site-search" type="search" placeholder="개념, 수식, 알고리즘 검색…" autocomplete="off" />
+          <kbd>ESC</kbd>
+        </div>
+        <div class="search-results" data-search-results></div>
+        <p class="search-hint">↑↓ 이동 · Enter 열기 · Esc 닫기</p>
+      </section>
+    </div>
+  </body>
+</html>
