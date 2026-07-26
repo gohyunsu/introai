@@ -2495,6 +2495,11 @@ body.focus-mode .lesson-main {
   .site-footer { grid-template-columns: 1fr; gap: 18px; }
   .lesson-progress { display: none; }
   .lesson-layout { display: block; }
+  .lesson-main {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
   .chapter-sidebar {
     z-index: 200;
     width: min(86vw, 320px);
@@ -2508,6 +2513,7 @@ body.focus-mode .lesson-main {
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    overflow: hidden;
     padding: 74px 18px 80px;
   }
   .lesson-section,
@@ -2516,6 +2522,7 @@ body.focus-mode .lesson-main {
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
+    word-break: normal;
   }
   .mobile-toc-button {
     position: fixed;
