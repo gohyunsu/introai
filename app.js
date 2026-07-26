@@ -19,11 +19,24 @@
   }
 
   function codeHighlight(value = "") {
-    return escapeHtml(value)
-      .replace(/(#.*)$/gm, '<span class="code-comment">$1</span>')
-      .replace(/\b(from|import|as|for|in|if|else|return|def|class|True|False|None)\b/g, '<span class="code-key">$1</span>')
-      .replace(/\b(fit|score|predict|transform|compile|evaluate|partial_fit|add|sum|print)\b/g, '<span class="code-fn">$1</span>')
-      .replace(/(&quot;.*?&quot;|&#039;.*?&#039;)/g, '<span class="code-string">$1</span>');
+    const tokens = /(#.*$)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|\b(from|import|as|for|in|if|elif|else|return|def|class|try|except|with|while|break|continue|lambda|yield|True|False|None)\b|\b(fit|score|predict|transform|compile|evaluate|partial_fit|add|sum|print)\b/gm;
+    let highlighted = "";
+    let cursor = 0;
+
+    for (const match of value.matchAll(tokens)) {
+      highlighted += escapeHtml(value.slice(cursor, match.index));
+      const className = match[1]
+        ? "code-comment"
+        : match[2]
+          ? "code-string"
+          : match[3]
+            ? "code-key"
+            : "code-fn";
+      highlighted += `<span class="${className}">${escapeHtml(match[0])}</span>`;
+      cursor = match.index + match[0].length;
+    }
+
+    return highlighted + escapeHtml(value.slice(cursor));
   }
 
   function getProgress() {

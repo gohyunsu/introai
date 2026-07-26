@@ -48,6 +48,7 @@ const theorySource = await readFile(join(root, "theory.js"), "utf8");
 const practiceSource = await readFile(join(root, "practice.js"), "utf8");
 const masterySource = await readFile(join(root, "mastery.js"), "utf8");
 const visualNotesSource = await readFile(join(root, "visual-notes.js"), "utf8");
+const appSource = await readFile(join(root, "app.js"), "utf8");
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox);
 vm.runInNewContext(theorySource, sandbox);
@@ -57,6 +58,41 @@ vm.runInNewContext(visualNotesSource, sandbox);
 const chapters = sandbox.window.CHAPTERS;
 const visuals = sandbox.window.VISUALS;
 const media = sandbox.window.MEDIA;
+
+const highlighterHelpers = appSource.match(/  function escapeHtml[\s\S]*?(?=\n  function getProgress)/)?.[0];
+if (!highlighterHelpers) {
+  errors.push("코드 하이라이터 함수를 찾을 수 없음");
+} else {
+  const highlighterSandbox = {};
+  const sampleCode = `from sklearn import metrics
+model.fit(X)  # fit class "quoted"
+label = "C# sample"
+print("<unsafe>")`;
+  vm.runInNewContext(
+    `${highlighterHelpers}\nthis.highlighted = codeHighlight(${JSON.stringify(sampleCode)});`,
+    highlighterSandbox
+  );
+  const highlighted = highlighterSandbox.highlighted;
+  const expectedTokens = [
+    '<span class="code-key">from</span>',
+    '<span class="code-fn">fit</span>',
+    '<span class="code-comment"># fit class &quot;quoted&quot;</span>',
+    '<span class="code-string">&quot;C# sample&quot;</span>',
+    '<span class="code-string">&quot;&lt;unsafe&gt;&quot;</span>'
+  ];
+  expectedTokens.forEach(token => {
+    if (!highlighted.includes(token)) errors.push(`코드 하이라이트 토큰 누락: ${token}`);
+  });
+  if (highlighted.includes("<span <span") || highlighted.includes("&lt;span")) {
+    errors.push("코드 하이라이트 태그가 다시 토큰화됨");
+  }
+  const openedSpans = [...highlighted.matchAll(/<span\b/g)].length;
+  const closedSpans = [...highlighted.matchAll(/<\/span>/g)].length;
+  if (openedSpans !== closedSpans) {
+    errors.push(`코드 하이라이트 span 불균형: ${openedSpans}/${closedSpans}`);
+  }
+}
+
 if (!Array.isArray(chapters) || chapters.length !== 12) {
   errors.push(`장 수가 12개가 아님: ${chapters?.length}`);
 } else {
