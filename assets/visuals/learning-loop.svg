@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">AI 시스템의 반복 학습 루프</title>
+  <desc id="desc">문제 정의에서 데이터, 모델, 평가, 배포, 피드백을 거쳐 다시 문제로 돌아오는 순환 과정</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="54" y="62" font-family="sans-serif" font-size="24" font-weight="800">MODEL IS ONE PART OF THE SYSTEM</text>
+  <g font-family="sans-serif" font-size="17" font-weight="800" text-anchor="middle">
+    <rect x="60" y="178" width="132" height="84" rx="18" fill="#e8ff64" stroke="#171813" stroke-width="2"/><text x="126" y="228">문제 · 행동</text>
+    <rect x="224" y="98" width="132" height="84" rx="18" fill="#eef4ff" stroke="#171813" stroke-width="2"/><text x="290" y="148">데이터</text>
+    <rect x="384" y="178" width="132" height="84" rx="18" fill="#9d83ee" stroke="#171813" stroke-width="2"/><text x="450" y="228" fill="#fff">모델 · 손실</text>
+    <rect x="544" y="98" width="132" height="84" rx="18" fill="#fff" stroke="#171813" stroke-width="2"/><text x="610" y="148">검증 · 평가</text>
+    <rect x="708" y="178" width="132" height="84" rx="18" fill="#ff755d" stroke="#171813" stroke-width="2"/><text x="774" y="228" fill="#fff">배포 · 결정</text>
+  </g>
+  <g fill="none" stroke="#171813" stroke-width="3" marker-end="url(#a)">
+    <path d="M192 200L224 166"/><path d="M356 166L384 200"/><path d="M516 200L544 166"/><path d="M676 166L708 200"/>
+    <path d="M774 278C774 402 126 402 126 278"/>
+  </g>
+  <text x="450" y="376" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700">운영 피드백 · 분포 변화 · 새 라벨</text>
+  <text x="450" y="430" text-anchor="middle" font-family="sans-serif" font-size="14">평가 결과가 다음 데이터 수집과 문제 정의를 바꾼다</text>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#171813"/></marker></defs>
+</svg>

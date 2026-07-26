@@ -137,7 +137,8 @@
 
     const visualGrid = $("[data-visual-grid]");
     if (visualGrid) {
-      visualGrid.innerHTML = visuals.map((item, index) => `
+      const homeVisuals = visuals.filter(item => item.home !== false);
+      visualGrid.innerHTML = homeVisuals.map((item, index) => `
         <figure class="visual-card ${index === 0 || index === 3 || index === 5 ? "visual-card-wide" : ""}">
           <a class="visual-card-image" href="${item.source}" target="_blank" rel="noreferrer">
             <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" />

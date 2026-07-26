@@ -26,6 +26,18 @@ official concept references. They are covered by the repository's MIT license.
 | `visuals/classification-threshold.svg` | [scikit-learn · Logistic regression](https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression) |
 | `visuals/tree-ensemble.svg` | [scikit-learn · Ensemble methods](https://scikit-learn.org/stable/modules/ensemble.html) |
 | `visuals/kmeans-pca.svg` | [scikit-learn · PCA](https://scikit-learn.org/stable/modules/decomposition.html#pca) |
+| `visuals/learning-loop.svg` | [Google for Developers · Introduction to Machine Learning](https://developers.google.com/machine-learning/intro-to-ml) |
+| `visuals/knn-k-effect.svg` | [scikit-learn · Nearest Neighbors](https://scikit-learn.org/stable/modules/neighbors.html) |
+| `visuals/data-shapes.svg` | [NumPy · reshape](https://numpy.org/doc/stable/reference/generated/numpy.reshape.html) |
+| `visuals/regularization-coefficients.svg` | [scikit-learn · Linear models](https://scikit-learn.org/stable/modules/linear_model.html) |
+| `visuals/confusion-matrix.svg` | [scikit-learn · Confusion matrix](https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix) |
+| `visuals/tree-split.svg` | [scikit-learn · Decision Trees](https://scikit-learn.org/stable/modules/tree.html) |
+| `visuals/pca-reconstruction.svg` | [scikit-learn · PCA](https://scikit-learn.org/stable/modules/decomposition.html#pca) |
+| `visuals/backprop-chain.svg` | [TensorFlow · Automatic differentiation](https://www.tensorflow.org/guide/autodiff) |
+| `visuals/convolution-window.svg` | [TensorFlow · Convolutional Neural Network](https://www.tensorflow.org/tutorials/images/cnn) |
+| `visuals/lstm-gates.svg` | [Hochreiter & Schmidhuber · Long Short-Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf) |
+| `visuals/dli-lab-ladder.svg` | [NVIDIA · Fundamentals of Deep Learning](https://www.nvidia.com/en-us/training/instructor-led-workshops/fundamentals-of-deep-learning/) |
+| `visuals/anomaly-score.svg` | [scikit-learn · Precision, recall and F-measures](https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics) |
 
 The MIT license at the repository root applies to original site code and
 content only. The visual assets above remain available under their respective

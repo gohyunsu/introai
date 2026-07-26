@@ -47,11 +47,13 @@ const dataSource = await readFile(join(root, "data.js"), "utf8");
 const theorySource = await readFile(join(root, "theory.js"), "utf8");
 const practiceSource = await readFile(join(root, "practice.js"), "utf8");
 const masterySource = await readFile(join(root, "mastery.js"), "utf8");
+const visualNotesSource = await readFile(join(root, "visual-notes.js"), "utf8");
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox);
 vm.runInNewContext(theorySource, sandbox);
 vm.runInNewContext(practiceSource, sandbox);
 vm.runInNewContext(masterySource, sandbox);
+vm.runInNewContext(visualNotesSource, sandbox);
 const chapters = sandbox.window.CHAPTERS;
 const visuals = sandbox.window.VISUALS;
 const media = sandbox.window.MEDIA;
@@ -131,6 +133,11 @@ if (!Array.isArray(chapters) || chapters.length !== 12) {
       section.visuals?.length || section.videos?.length
     ));
     if (!hasInlineMedia) errors.push(`장 본문 시각 자료 누락: ${chapter.id}`);
+
+    const inlineVisualIds = new Set(chapter.sections.flatMap(section => section.visuals || []));
+    if (inlineVisualIds.size < 2) {
+      errors.push(`장 본문 시각 자료가 2개 미만임: ${chapter.id} → ${inlineVisualIds.size}`);
+    }
   });
 
   const codeCount = chapters.reduce((sum, chapter) => (
@@ -189,9 +196,11 @@ if (!Array.isArray(chapters) || chapters.length !== 12) {
   if (formulaCount < 80) errors.push(`검증한 수식이 80개 미만임: ${formulaCount}`);
 }
 
-if (!Array.isArray(visuals) || visuals.length < 13) {
-  errors.push(`공개 시각 자료가 13개 미만임: ${visuals?.length}`);
+if (!Array.isArray(visuals) || visuals.length < 25) {
+  errors.push(`공개 시각 자료가 25개 미만임: ${visuals?.length}`);
 } else {
+  const visualIds = new Set(visuals.map(visual => visual.id));
+  if (visualIds.size !== visuals.length) errors.push("중복 visual id가 있음");
   for (const visual of visuals) {
     if (!visual.id || !visual.src || !visual.source || !visual.author || !visual.license) {
       errors.push(`불완전한 시각 자료 메타데이터: ${visual?.id}`);
@@ -203,6 +212,15 @@ if (!Array.isArray(visuals) || visuals.length < 13) {
       errors.push(`시각 자료 파일 없음: ${visual.src}`);
     }
   }
+  chapters?.forEach(chapter => {
+    chapter.sections.forEach(section => {
+      section.visuals?.forEach(id => {
+        if (!visualIds.has(id)) {
+          errors.push(`시각 자료 참조 누락: ${chapter.id}/${section.id} → ${id}`);
+        }
+      });
+    });
+  });
 }
 
 if (!Array.isArray(media) || media.length < 18) {
@@ -236,4 +254,4 @@ const formulaCount = chapters.reduce((sum, chapter) => (
     return sectionSum + inline + display + dollars + (section.equation?.tex ? 1 : 0);
   }, 0)
 ), 0);
-console.log(`검증 통과: ${files.length} files · ${chapters.length} chapters · ${topicCount} topics · ${formulaCount} formulas · 공개 금지 자료 0`);
+console.log(`검증 통과: ${files.length} files · ${chapters.length} chapters · ${topicCount} topics · ${formulaCount} formulas · ${visuals.length} visuals · 공개 금지 자료 0`);

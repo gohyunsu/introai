@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">신경망의 순전파와 역전파</title>
+  <desc id="desc">입력에서 예측과 손실로 진행하는 순전파와 손실에서 각 가중치의 기울기를 계산해 되돌아가는 역전파의 방향</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="50" y="58" font-family="sans-serif" font-size="24" font-weight="800">순전파로 틀린 정도를 계산하고, 역전파로 책임을 나눈다</text>
+  <g font-family="sans-serif">
+    <text x="58" y="118" font-size="15" font-weight="800" fill="#295f4f">FORWARD · 값 계산</text>
+    <path d="M130 176H760" stroke="#86b6a6" stroke-width="8" stroke-linecap="round"/>
+    <path d="M746 163L768 176L746 189" fill="#86b6a6"/>
+    <g text-anchor="middle">
+      <circle cx="140" cy="176" r="48" fill="#fff" stroke="#171813" stroke-width="2"/><text x="140" y="182" font-size="17" font-weight="800">입력 x</text>
+      <circle cx="340" cy="176" r="58" fill="#eef4ff" stroke="#171813" stroke-width="2"/><text x="340" y="170" font-size="16" font-weight="800">선형변환</text><text x="340" y="192" font-size="14">z = Wx + b</text>
+      <circle cx="560" cy="176" r="55" fill="#fff" stroke="#171813" stroke-width="2"/><text x="560" y="170" font-size="16" font-weight="800">활성화</text><text x="560" y="192" font-size="14">a = f(z)</text>
+      <circle cx="760" cy="176" r="48" fill="#ffddd7" stroke="#171813" stroke-width="2"/><text x="760" y="170" font-size="16" font-weight="800">손실 L</text><text x="760" y="192" font-size="14">ŷ ↔ y</text>
+    </g>
+    <text x="58" y="291" font-size="15" font-weight="800" fill="#9b3c2b">BACKWARD · 기울기 계산</text>
+    <path d="M760 342H140" stroke="#ff755d" stroke-width="8" stroke-linecap="round"/>
+    <path d="M154 329L132 342L154 355" fill="#ff755d"/>
+    <g text-anchor="middle" font-weight="800">
+      <rect x="664" y="315" width="150" height="54" rx="15" fill="#fff"/><text x="739" y="348" font-size="15">∂L/∂ŷ</text>
+      <rect x="470" y="315" width="150" height="54" rx="15" fill="#fff"/><text x="545" y="348" font-size="15">× f′(z)</text>
+      <rect x="276" y="315" width="150" height="54" rx="15" fill="#fff"/><text x="351" y="348" font-size="15">∂L/∂W</text>
+      <rect x="86" y="315" width="150" height="54" rx="15" fill="#171813"/><text x="161" y="348" font-size="15" fill="#e8ff64">W ← W − η∇W</text>
+    </g>
+    <text x="450" y="425" text-anchor="middle" font-size="15">연쇄법칙이 각 층의 국소 미분을 곱해 손실의 원인을 전달한다</text>
+  </g>
+</svg>

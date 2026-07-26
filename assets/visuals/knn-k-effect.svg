@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">K-NN에서 k가 결정 경계에 미치는 영향</title>
+  <desc id="desc">k가 1, 5, 15로 커질 때 국소적인 경계가 점차 매끄러워지고 소수 집단이 희석되는 비교</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="48" y="58" font-family="sans-serif" font-size="24" font-weight="800">k가 작으면 민감하고, 크면 매끄럽다</text>
+  <g font-family="sans-serif">
+    <g transform="translate(48 92)"><rect width="244" height="300" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/><text x="22" y="36" font-size="18" font-weight="800">k = 1</text><path d="M18 230C74 110 100 270 146 126S210 194 226 68" fill="none" stroke="#9d83ee" stroke-width="6"/><g fill="#6d9ef8"><circle cx="58" cy="102" r="10"/><circle cx="92" cy="176" r="10"/><circle cx="144" cy="84" r="10"/></g><g fill="#ff755d"><circle cx="82" cy="244" r="10"/><circle cx="158" cy="220" r="10"/><circle cx="204" cy="156" r="10"/></g><text x="22" y="280" font-size="14">낮은 편향 · 높은 분산</text></g>
+    <g transform="translate(328 92)"><rect width="244" height="300" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/><text x="22" y="36" font-size="18" font-weight="800">k = 5</text><path d="M18 204C84 134 150 174 226 108" fill="none" stroke="#9d83ee" stroke-width="6"/><g fill="#6d9ef8"><circle cx="58" cy="102" r="10"/><circle cx="92" cy="154" r="10"/><circle cx="144" cy="84" r="10"/></g><g fill="#ff755d"><circle cx="82" cy="244" r="10"/><circle cx="158" cy="220" r="10"/><circle cx="204" cy="156" r="10"/></g><text x="22" y="280" font-size="14">국소성과 안정성의 절충</text></g>
+    <g transform="translate(608 92)"><rect width="244" height="300" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/><text x="22" y="36" font-size="18" font-weight="800">k = 15</text><path d="M18 172C88 164 156 156 226 148" fill="none" stroke="#9d83ee" stroke-width="6"/><g fill="#6d9ef8"><circle cx="58" cy="102" r="10"/><circle cx="92" cy="154" r="10"/><circle cx="144" cy="84" r="10"/></g><g fill="#ff755d"><circle cx="82" cy="244" r="10"/><circle cx="158" cy="220" r="10"/><circle cx="204" cy="156" r="10"/></g><text x="22" y="280" font-size="14">높은 편향 · 소수 패턴 희석</text></g>
+  </g>
+  <text x="450" y="438" text-anchor="middle" font-family="sans-serif" font-size="14">정답 k는 훈련 점수가 아니라 교차검증으로 선택한다</text>
+</svg>

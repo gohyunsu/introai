@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">PCA 압축과 복원의 흐름</title>
+  <desc id="desc">100 곱하기 100 이미지를 만 차원 벡터로 펼친 뒤 주성분 k개로 압축하고 다시 복원하며 정보 손실을 비교하는 과정</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="50" y="58" font-family="sans-serif" font-size="24" font-weight="800">PCA는 중요한 변화 방향만 남겨 데이터를 압축한다</text>
+  <g font-family="sans-serif">
+    <rect x="50" y="108" width="170" height="220" rx="22" fill="#fff" stroke="#171813" stroke-width="2"/>
+    <text x="135" y="142" text-anchor="middle" font-size="16" font-weight="800">원본 이미지</text>
+    <g transform="translate(76 164)">
+      <rect width="118" height="118" rx="10" fill="#dce8ff"/>
+      <path d="M14 91L39 62L58 79L79 42L105 91Z" fill="#6d9ef8"/>
+      <circle cx="35" cy="34" r="12" fill="#ff755d"/>
+    </g>
+    <text x="135" y="307" text-anchor="middle" font-size="14">100 × 100 픽셀</text>
+    <path d="M230 218H315" stroke="#171813" stroke-width="3"/>
+    <path d="M303 207L318 218L303 229" fill="none" stroke="#171813" stroke-width="3"/>
+    <text x="274" y="197" text-anchor="middle" font-size="14">flatten</text>
+    <rect x="330" y="108" width="190" height="220" rx="22" fill="#171813"/>
+    <text x="425" y="142" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">10,000차원</text>
+    <g fill="#e8ff64">
+      <rect x="366" y="166" width="118" height="12" rx="6"/>
+      <rect x="366" y="190" width="82" height="12" rx="6"/>
+      <rect x="366" y="214" width="103" height="12" rx="6"/>
+      <rect x="366" y="238" width="61" height="12" rx="6"/>
+      <rect x="366" y="262" width="94" height="12" rx="6"/>
+    </g>
+    <text x="425" y="306" text-anchor="middle" font-size="14" fill="#fff">상관된 픽셀 값</text>
+    <path d="M530 218H615" stroke="#171813" stroke-width="3"/>
+    <path d="M603 207L618 218L603 229" fill="none" stroke="#171813" stroke-width="3"/>
+    <text x="574" y="197" text-anchor="middle" font-size="14">PCA</text>
+    <rect x="630" y="108" width="220" height="220" rx="22" fill="#fff" stroke="#171813" stroke-width="2"/>
+    <text x="740" y="142" text-anchor="middle" font-size="16" font-weight="800">주성분 k개</text>
+    <g transform="translate(664 172)">
+      <rect width="152" height="28" rx="8" fill="#6d9ef8"/>
+      <rect y="45" width="116" height="28" rx="8" fill="#86b6a6"/>
+      <rect y="90" width="78" height="28" rx="8" fill="#ff755d"/>
+    </g>
+    <text x="740" y="306" text-anchor="middle" font-size="14">작은 표현 · 큰 분산 보존</text>
+    <path d="M740 337C740 420 135 420 135 341" fill="none" stroke="#ff755d" stroke-width="3" stroke-dasharray="8 7"/>
+    <text x="440" y="404" text-anchor="middle" font-size="15" font-weight="700" fill="#9b3c2b">inverse transform → 복원 오차로 잃은 정보 확인</text>
+  </g>
+</svg>

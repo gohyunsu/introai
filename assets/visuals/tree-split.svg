@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">결정트리의 한 번의 분할과 불순도</title>
+  <desc id="desc">빨강 파랑 표본이 섞인 부모 노드를 임곗값 질문으로 나누어 더 순수한 두 자식 노드로 만드는 과정</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="52" y="58" font-family="sans-serif" font-size="24" font-weight="800">좋은 질문은 자식 노드의 섞임을 줄인다</text>
+  <g font-family="sans-serif">
+    <rect x="312" y="92" width="276" height="120" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/><text x="338" y="128" font-size="17" font-weight="800">PARENT · Gini = 0.48</text>
+    <g transform="translate(342 154)"><g fill="#6d9ef8"><circle cx="0" cy="0" r="10"/><circle cx="34" cy="0" r="10"/><circle cx="68" cy="0" r="10"/><circle cx="102" cy="0" r="10"/></g><g fill="#ff755d"><circle cx="136" cy="0" r="10"/><circle cx="170" cy="0" r="10"/><circle cx="204" cy="0" r="10"/></g></g>
+    <path d="M450 212V254M450 254L232 304M450 254L668 304" fill="none" stroke="#171813" stroke-width="3"/>
+    <rect x="350" y="230" width="200" height="44" rx="12" fill="#171813"/><text x="450" y="258" text-anchor="middle" font-size="15" fill="#e8ff64">당도 ≤ 1.65?</text>
+    <rect x="96" y="304" width="272" height="120" rx="20" fill="#eef4ff" stroke="#171813" stroke-width="2"/><text x="122" y="340" font-size="17" font-weight="800">YES · Gini = 0.18</text>
+    <rect x="532" y="304" width="272" height="120" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/><text x="558" y="340" font-size="17" font-weight="800">NO · Gini = 0.24</text>
+    <g transform="translate(130 378)"><g fill="#6d9ef8"><circle cx="0" cy="0" r="10"/><circle cx="34" cy="0" r="10"/><circle cx="68" cy="0" r="10"/><circle cx="102" cy="0" r="10"/><circle cx="136" cy="0" r="10"/></g><circle cx="188" cy="0" r="10" fill="#ff755d"/></g>
+    <g transform="translate(566 378)"><circle cx="0" cy="0" r="10" fill="#6d9ef8"/><g fill="#ff755d"><circle cx="52" cy="0" r="10"/><circle cx="86" cy="0" r="10"/><circle cx="120" cy="0" r="10"/><circle cx="154" cy="0" r="10"/><circle cx="188" cy="0" r="10"/></g></g>
+  </g>
+</svg>

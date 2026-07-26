@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">이상 점수와 운영 임곗값</title>
+  <desc id="desc">정상과 이상 표본의 점수 분포가 겹치는 상황에서 임곗값을 이동하면 거짓 경보와 놓친 이상 사이의 균형이 바뀌는 모습</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="50" y="58" font-family="sans-serif" font-size="24" font-weight="800">이상 점수만으로는 부족하다—어디서 경보할지 결정해야 한다</text>
+  <g font-family="sans-serif">
+    <line x1="85" y1="360" x2="825" y2="360" stroke="#171813" stroke-width="3"/>
+    <line x1="85" y1="360" x2="85" y2="112" stroke="#171813" stroke-width="3"/>
+    <text x="455" y="409" text-anchor="middle" font-size="15">이상 점수 → 높을수록 낯선 표본</text>
+    <text x="36" y="240" text-anchor="middle" font-size="14" transform="rotate(-90 36 240)">표본 밀도</text>
+    <path d="M90 358C145 355 161 311 191 231C223 145 272 132 313 203C345 258 359 329 432 356Z" fill="#6d9ef8" fill-opacity=".55" stroke="#3465c2" stroke-width="3"/>
+    <path d="M350 358C422 350 448 315 485 249C530 169 586 153 634 215C674 267 695 337 810 358Z" fill="#ff755d" fill-opacity=".55" stroke="#b64935" stroke-width="3"/>
+    <text x="235" y="150" text-anchor="middle" font-size="16" font-weight="800" fill="#264f9b">정상</text>
+    <text x="603" y="169" text-anchor="middle" font-size="16" font-weight="800" fill="#9b3c2b">이상</text>
+    <line x1="455" y1="112" x2="455" y2="360" stroke="#171813" stroke-width="4" stroke-dasharray="10 8"/>
+    <rect x="385" y="91" width="140" height="38" rx="12" fill="#171813"/>
+    <text x="455" y="116" text-anchor="middle" font-size="14" font-weight="800" fill="#e8ff64">임곗값 τ</text>
+    <path d="M361 322H447V357H361Z" fill="#ff755d" fill-opacity=".35"/>
+    <text x="376" y="305" font-size="13" font-weight="800" fill="#9b3c2b">놓친 이상 FN</text>
+    <path d="M461 322H506V357H461Z" fill="#6d9ef8" fill-opacity=".45"/>
+    <text x="482" y="289" text-anchor="middle" font-size="13" font-weight="800" fill="#264f9b">거짓 경보 FP</text>
+    <rect x="112" y="430" width="676" height="34" rx="11" fill="#fff"/>
+    <text x="450" y="453" text-anchor="middle" font-size="13">τ를 낮추면 재현율↑·경보 수↑ · τ를 높이면 정밀도↑·놓침 위험↑</text>
+  </g>
+</svg>

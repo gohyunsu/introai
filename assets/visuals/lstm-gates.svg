@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">LSTM의 셀 상태와 세 가지 게이트</title>
+  <desc id="desc">이전 셀 상태가 위쪽 경로로 흐르고 망각 게이트, 입력 게이트, 출력 게이트가 기억의 삭제 추가 노출을 조절하는 구조</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="50" y="58" font-family="sans-serif" font-size="24" font-weight="800">LSTM은 기억을 지우고, 쓰고, 읽는 비율을 학습한다</text>
+  <g font-family="sans-serif">
+    <text x="50" y="126" font-size="15" font-weight="800">셀 상태 · 장기 기억 경로</text>
+    <path d="M112 150H786" stroke="#6d9ef8" stroke-width="12" stroke-linecap="round"/>
+    <path d="M771 135L796 150L771 165" fill="#6d9ef8"/>
+    <circle cx="285" cy="150" r="26" fill="#fff" stroke="#171813" stroke-width="2"/><text x="285" y="157" text-anchor="middle" font-size="22" font-weight="800">×</text>
+    <circle cx="520" cy="150" r="26" fill="#fff" stroke="#171813" stroke-width="2"/><text x="520" y="157" text-anchor="middle" font-size="22" font-weight="800">+</text>
+    <rect x="86" y="280" width="190" height="92" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/>
+    <text x="181" y="312" text-anchor="middle" font-size="16" font-weight="800">망각 게이트 fₜ</text>
+    <text x="181" y="339" text-anchor="middle" font-size="14">무엇을 지울까?</text>
+    <text x="181" y="361" text-anchor="middle" font-size="13">σ → 0…1</text>
+    <path d="M181 280V224H285V178" fill="none" stroke="#ff755d" stroke-width="4"/>
+    <rect x="350" y="280" width="210" height="92" rx="20" fill="#171813"/>
+    <text x="455" y="312" text-anchor="middle" font-size="16" font-weight="800" fill="#e8ff64">입력 게이트 iₜ</text>
+    <text x="455" y="339" text-anchor="middle" font-size="14" fill="#fff">새 기억을 얼마나 쓸까?</text>
+    <text x="455" y="361" text-anchor="middle" font-size="13" fill="#fff">iₜ × c̃ₜ</text>
+    <path d="M455 280V224H520V178" fill="none" stroke="#86b6a6" stroke-width="4"/>
+    <rect x="632" y="280" width="190" height="92" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/>
+    <text x="727" y="312" text-anchor="middle" font-size="16" font-weight="800">출력 게이트 oₜ</text>
+    <text x="727" y="339" text-anchor="middle" font-size="14">무엇을 보여줄까?</text>
+    <text x="727" y="361" text-anchor="middle" font-size="13">hₜ = oₜ tanh(cₜ)</text>
+    <path d="M727 280V226H680V177" fill="none" stroke="#171813" stroke-width="4"/>
+    <path d="M680 150V97H800" fill="none" stroke="#171813" stroke-width="4"/>
+    <path d="M787 86L802 97L787 108" fill="none" stroke="#171813" stroke-width="3"/>
+    <text x="744" y="86" font-size="14" font-weight="800">출력 hₜ</text>
+    <rect x="165" y="405" width="570" height="42" rx="13" fill="#fff"/>
+    <text x="450" y="432" text-anchor="middle" font-size="14">각 게이트는 xₜ와 hₜ₋₁을 보고 시점마다 다른 값을 낸다</text>
+  </g>
+</svg>

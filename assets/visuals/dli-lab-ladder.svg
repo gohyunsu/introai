@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">NVIDIA 딥러닝 실습의 학습 경로</title>
+  <desc id="desc">주피터 환경 점검부터 MNIST, 수화 분류, 합성곱 신경망, 데이터 증강과 배포, 전이학습, 순환 신경망, 평가로 이어지는 실습 단계</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="50" y="58" font-family="sans-serif" font-size="24" font-weight="800">실습은 작은 성공을 쌓아 실제 딥러닝 파이프라인으로 간다</text>
+  <g font-family="sans-serif">
+    <path d="M92 339H204V299H316V259H428V219H540V179H652V139H808" fill="none" stroke="#171813" stroke-width="18" stroke-linejoin="round"/>
+    <g text-anchor="middle">
+      <circle cx="92" cy="339" r="34" fill="#fff" stroke="#171813" stroke-width="2"/><text x="92" y="334" font-size="13" font-weight="800">00</text><text x="92" y="351" font-size="12">환경</text>
+      <circle cx="204" cy="299" r="34" fill="#eef4ff" stroke="#171813" stroke-width="2"/><text x="204" y="294" font-size="13" font-weight="800">01</text><text x="204" y="311" font-size="12">MNIST</text>
+      <circle cx="316" cy="259" r="34" fill="#fff" stroke="#171813" stroke-width="2"/><text x="316" y="254" font-size="13" font-weight="800">02</text><text x="316" y="271" font-size="12">ASL</text>
+      <circle cx="428" cy="219" r="34" fill="#dce8ff" stroke="#171813" stroke-width="2"/><text x="428" y="214" font-size="13" font-weight="800">03</text><text x="428" y="231" font-size="12">CNN</text>
+      <circle cx="540" cy="179" r="34" fill="#fff" stroke="#171813" stroke-width="2"/><text x="540" y="174" font-size="13" font-weight="800">04</text><text x="540" y="191" font-size="12">증강</text>
+      <circle cx="652" cy="139" r="34" fill="#ffddd7" stroke="#171813" stroke-width="2"/><text x="652" y="134" font-size="13" font-weight="800">05</text><text x="652" y="151" font-size="12">VGG16</text>
+      <circle cx="764" cy="139" r="34" fill="#171813" stroke="#171813" stroke-width="2"/><text x="764" y="134" font-size="13" font-weight="800" fill="#e8ff64">06–07</text><text x="764" y="151" font-size="12" fill="#fff">LSTM</text>
+    </g>
+    <g font-size="13" font-weight="700" text-anchor="middle">
+      <text x="92" y="399">GPU·노트북</text>
+      <text x="204" y="359">첫 분류기</text>
+      <text x="316" y="319">Dense 기준선</text>
+      <text x="428" y="279">공간 특징</text>
+      <text x="540" y="239">일반화·배포</text>
+      <text x="652" y="199">전이학습</text>
+      <text x="764" y="199">시퀀스</text>
+    </g>
+    <rect x="216" y="407" width="468" height="42" rx="13" fill="#86b6a6"/>
+    <text x="450" y="434" text-anchor="middle" font-size="14" font-weight="800">매 단계: 실행 → 지표 확인 → 오류 분석 → 한 가지 변경 → 재현</text>
+  </g>
+</svg>

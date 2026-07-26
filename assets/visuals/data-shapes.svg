@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">표 데이터와 이미지 텐서의 shape 변환</title>
+  <desc id="desc">샘플과 특성으로 된 행렬, 높이 너비 채널을 가진 이미지 배치, 펼친 특성 행렬의 축 의미</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="48" y="58" font-family="sans-serif" font-size="24" font-weight="800">축의 순서를 말로 읽으면 shape 오류가 줄어든다</text>
+  <g font-family="sans-serif">
+    <g transform="translate(55 105)"><text x="0" y="-14" font-size="18" font-weight="800">표 데이터 X</text><g fill="#eef4ff" stroke="#171813"><rect width="230" height="226" rx="14"/><path d="M0 56h230M0 112h230M0 168h230M76 0v226M152 0v226"/></g><text x="115" y="258" text-anchor="middle" font-size="15">(n samples, p features)</text></g>
+    <path d="M310 218H384" stroke="#171813" stroke-width="4" marker-end="url(#a)"/>
+    <g transform="translate(410 104)"><text x="0" y="-14" font-size="18" font-weight="800">이미지 배치</text><g fill="#9d83ee" fill-opacity=".55" stroke="#171813" stroke-width="2"><rect x="42" y="0" width="170" height="170"/><rect x="24" y="18" width="170" height="170"/><rect x="6" y="36" width="170" height="170"/></g><text x="108" y="258" text-anchor="middle" font-size="15">(N, H, W, C)</text></g>
+    <path d="M650 218H714" stroke="#171813" stroke-width="4" marker-end="url(#a)"/>
+    <g transform="translate(738 104)"><text x="0" y="-14" font-size="18" font-weight="800">펼치기</text><rect width="108" height="206" rx="14" fill="#e8ff64" stroke="#171813" stroke-width="2"/><path d="M0 28h108M0 56h108M0 84h108M0 112h108M0 140h108M0 168h108" stroke="#171813" opacity=".35"/><text x="54" y="238" text-anchor="middle" font-size="15">(N, H·W·C)</text></g>
+  </g>
+  <rect x="160" y="408" width="580" height="42" rx="12" fill="#171813"/><text x="450" y="435" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#e8ff64">reshape는 값의 수를 바꾸지 않고 축의 해석만 바꾼다</text>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#171813"/></marker></defs>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">합성곱 필터가 특징맵을 만드는 과정</title>
+  <desc id="desc">입력 이미지의 작은 영역에 같은 3 곱하기 3 필터를 반복 적용해 출력 특징맵의 한 값을 만드는 과정</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="50" y="58" font-family="sans-serif" font-size="24" font-weight="800">같은 필터가 위치만 바꾸며 국소 패턴을 찾는다</text>
+  <g font-family="sans-serif">
+    <text x="162" y="112" text-anchor="middle" font-size="16" font-weight="800">입력 5 × 5</text>
+    <g transform="translate(72 132)" stroke="#171813" stroke-width="1">
+      <path d="M0 0H180V180H0Z M36 0V180 M72 0V180 M108 0V180 M144 0V180 M0 36H180 M0 72H180 M0 108H180 M0 144H180" fill="#fff"/>
+      <rect x="36" y="36" width="108" height="108" fill="#dce8ff" stroke="#6d9ef8" stroke-width="5"/>
+      <circle cx="90" cy="90" r="13" fill="#ff755d" stroke="none"/>
+    </g>
+    <text x="162" y="342" text-anchor="middle" font-size="14">파란 창: 현재 보는 수용영역</text>
+    <path d="M275 222H358" stroke="#171813" stroke-width="3"/>
+    <path d="M346 211L361 222L346 233" fill="none" stroke="#171813" stroke-width="3"/>
+    <text x="318" y="197" text-anchor="middle" font-size="14">원소별 곱 + 합</text>
+    <rect x="374" y="126" width="182" height="190" rx="20" fill="#171813"/>
+    <text x="465" y="158" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">3 × 3 커널</text>
+    <g transform="translate(413 179)" fill="#e8ff64">
+      <rect width="32" height="32" rx="5"/><rect x="40" width="32" height="32" rx="5"/><rect x="80" width="32" height="32" rx="5"/>
+      <rect y="40" width="32" height="32" rx="5"/><rect x="40" y="40" width="32" height="32" rx="5" fill="#ff755d"/><rect x="80" y="40" width="32" height="32" rx="5"/>
+      <rect y="80" width="32" height="32" rx="5"/><rect x="40" y="80" width="32" height="32" rx="5"/><rect x="80" y="80" width="32" height="32" rx="5"/>
+    </g>
+    <text x="465" y="296" text-anchor="middle" font-size="14" fill="#fff">공유되는 9개 가중치</text>
+    <path d="M570 222H653" stroke="#171813" stroke-width="3"/>
+    <path d="M641 211L656 222L641 233" fill="none" stroke="#171813" stroke-width="3"/>
+    <text x="612" y="197" text-anchor="middle" font-size="14">stride = 1</text>
+    <text x="747" y="112" text-anchor="middle" font-size="16" font-weight="800">특징맵 3 × 3</text>
+    <g transform="translate(684 154)" stroke="#171813" stroke-width="2">
+      <path d="M0 0H126V126H0Z M42 0V126 M84 0V126 M0 42H126 M0 84H126" fill="#fff"/>
+      <rect x="42" y="42" width="42" height="42" fill="#ff755d"/>
+    </g>
+    <text x="747" y="306" text-anchor="middle" font-size="14">한 칸 = 한 위치의 반응</text>
+    <rect x="72" y="385" width="756" height="52" rx="16" fill="#fff"/>
+    <text x="450" y="417" text-anchor="middle" font-size="15"><tspan font-weight="800">padding</tspan>은 가장자리를 보존하고, <tspan font-weight="800">stride</tspan>는 이동 간격과 출력 크기를 정한다</text>
+  </g>
+</svg>
