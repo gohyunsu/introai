@@ -1,6 +1,7 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import vm from "node:vm";
+import katex from "../vendor/katex/katex.mjs";
 
 const root = process.cwd();
 const errors = [];
@@ -45,10 +46,12 @@ for (const html of files.filter(file => extname(file) === ".html")) {
 const dataSource = await readFile(join(root, "data.js"), "utf8");
 const theorySource = await readFile(join(root, "theory.js"), "utf8");
 const practiceSource = await readFile(join(root, "practice.js"), "utf8");
+const masterySource = await readFile(join(root, "mastery.js"), "utf8");
 const sandbox = { window: {} };
 vm.runInNewContext(dataSource, sandbox);
 vm.runInNewContext(theorySource, sandbox);
 vm.runInNewContext(practiceSource, sandbox);
+vm.runInNewContext(masterySource, sandbox);
 const chapters = sandbox.window.CHAPTERS;
 const visuals = sandbox.window.VISUALS;
 const media = sandbox.window.MEDIA;
@@ -71,7 +74,7 @@ if (!Array.isArray(chapters) || chapters.length !== 12) {
   });
 
   const topicCount = chapters.reduce((sum, chapter) => sum + chapter.sections.length, 0);
-  if (topicCount < 145) errors.push(`상세 이론·실습 주제가 145개 미만임: ${topicCount}`);
+  if (topicCount < 160) errors.push(`상세 이론·실습 주제가 160개 미만임: ${topicCount}`);
 
   const requiredCoverage = {
     "01-ai-map": ["전문가 시스템", "모집단", "강화학습"],
@@ -123,6 +126,11 @@ if (!Array.isArray(chapters) || chapters.length !== 12) {
       if (!ids.has(labId)) errors.push(`핵심 실습 누락: ${chapter.id} → ${labId}`);
       if (lab && !lab.codes?.length && !lab.code) errors.push(`실습 코드 누락: ${chapter.id} → ${labId}`);
     }
+
+    const hasInlineMedia = chapter.sections.some(section => (
+      section.visuals?.length || section.videos?.length
+    ));
+    if (!hasInlineMedia) errors.push(`장 본문 시각 자료 누락: ${chapter.id}`);
   });
 
   const codeCount = chapters.reduce((sum, chapter) => (
@@ -131,10 +139,58 @@ if (!Array.isArray(chapters) || chapters.length !== 12) {
     ), 0)
   ), 0);
   if (codeCount < 75) errors.push(`설명용 코드 블록이 75개 미만임: ${codeCount}`);
+
+  let formulaCount = 0;
+  const renderFormula = (tex, location) => {
+    formulaCount += 1;
+    try {
+      katex.renderToString(tex, {
+        displayMode: false,
+        throwOnError: true,
+        strict: "warn",
+        output: "htmlAndMathml"
+      });
+    } catch (error) {
+      errors.push(`KaTeX 수식 오류: ${location} → ${error.message}`);
+    }
+  };
+
+  chapters.forEach(chapter => {
+    chapter.sections.forEach(section => {
+      if (section.equation?.tex) {
+        renderFormula(section.equation.tex, `${chapter.id}/${section.id}/equation`);
+      }
+      const content = `${section.body || ""}\n${section.afterBody || ""}`;
+      const patterns = [
+        ["inline", /\\\(([\s\S]*?)\\\)/g],
+        ["display", /\\\[([\s\S]*?)\\\]/g],
+        ["display-dollar", /\$\$([\s\S]*?)\$\$/g]
+      ];
+      patterns.forEach(([kind, pattern]) => {
+        for (const match of content.matchAll(pattern)) {
+          renderFormula(match[1], `${chapter.id}/${section.id}/${kind}`);
+        }
+      });
+
+      const delimiterPairs = [
+        ["\\(", "\\)"],
+        ["\\[", "\\]"],
+        ["$$", "$$"]
+      ];
+      delimiterPairs.forEach(([left, right]) => {
+        const leftCount = content.split(left).length - 1;
+        const rightCount = content.split(right).length - 1;
+        if (left === right ? leftCount % 2 : leftCount !== rightCount) {
+          errors.push(`수식 구분자 불일치: ${chapter.id}/${section.id} → ${left} ${right}`);
+        }
+      });
+    });
+  });
+  if (formulaCount < 80) errors.push(`검증한 수식이 80개 미만임: ${formulaCount}`);
 }
 
-if (!Array.isArray(visuals) || visuals.length < 6) {
-  errors.push(`공개 시각 자료가 6개 미만임: ${visuals?.length}`);
+if (!Array.isArray(visuals) || visuals.length < 13) {
+  errors.push(`공개 시각 자료가 13개 미만임: ${visuals?.length}`);
 } else {
   for (const visual of visuals) {
     if (!visual.id || !visual.src || !visual.source || !visual.author || !visual.license) {
@@ -149,8 +205,19 @@ if (!Array.isArray(visuals) || visuals.length < 6) {
   }
 }
 
-if (!Array.isArray(media) || media.length < 10) {
-  errors.push(`공개 영상이 10개 미만임: ${media?.length}`);
+if (!Array.isArray(media) || media.length < 18) {
+  errors.push(`공개 영상이 18개 미만임: ${media?.length}`);
+} else {
+  const videoIds = new Set(media.map(item => item.videoId));
+  chapters?.forEach(chapter => {
+    chapter.sections.forEach(section => {
+      section.videos?.forEach(id => {
+        if (!videoIds.has(id) && !media.some(item => item.id === id)) {
+          errors.push(`영상 참조 누락: ${chapter.id}/${section.id} → ${id}`);
+        }
+      });
+    });
+  });
 }
 
 if (errors.length) {
@@ -160,4 +227,13 @@ if (errors.length) {
 }
 
 const topicCount = chapters.reduce((sum, chapter) => sum + chapter.sections.length, 0);
-console.log(`검증 통과: ${files.length} files · ${chapters.length} chapters · ${topicCount} topics · 공개 금지 자료 0`);
+const formulaCount = chapters.reduce((sum, chapter) => (
+  sum + chapter.sections.reduce((sectionSum, section) => {
+    const content = `${section.body || ""}\n${section.afterBody || ""}`;
+    const inline = [...content.matchAll(/\\\(([\s\S]*?)\\\)/g)].length;
+    const display = [...content.matchAll(/\\\[([\s\S]*?)\\\]/g)].length;
+    const dollars = [...content.matchAll(/\$\$([\s\S]*?)\$\$/g)].length;
+    return sectionSum + inline + display + dollars + (section.equation?.tex ? 1 : 0);
+  }, 0)
+), 0);
+console.log(`검증 통과: ${files.length} files · ${chapters.length} chapters · ${topicCount} topics · ${formulaCount} formulas · 공개 금지 자료 0`);

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">K-최근접 이웃의 거리와 스케일</title>
+  <desc id="desc">두 클래스의 점과 새 표본, 세 최근접 이웃을 둘러싼 원, 표준화 전후 거리의 차이를 보여 주는 도식</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <path d="M76 390V70M76 390H820" stroke="#171813" stroke-width="3"/>
+  <g fill="#6d9ef8" stroke="#fff" stroke-width="4">
+    <circle cx="175" cy="140" r="16"/><circle cx="235" cy="178" r="16"/><circle cx="284" cy="126" r="16"/>
+    <circle cx="324" cy="206" r="16"/><circle cx="386" cy="156" r="16"/>
+  </g>
+  <g fill="#ff755d" stroke="#fff" stroke-width="4">
+    <circle cx="560" cy="285" r="16"/><circle cx="620" cy="328" r="16"/><circle cx="688" cy="266" r="16"/>
+    <circle cx="742" cy="340" r="16"/><circle cx="650" cy="218" r="16"/>
+  </g>
+  <circle cx="470" cy="238" r="118" fill="none" stroke="#9d83ee" stroke-width="3" stroke-dasharray="10 8"/>
+  <path d="M470 218v40M450 238h40" stroke="#171813" stroke-width="7" stroke-linecap="round"/>
+  <path d="M470 238L386 156M470 238L560 285M470 238L650 218" stroke="#171813" stroke-width="2" opacity=".5"/>
+  <rect x="95" y="410" width="650" height="44" rx="12" fill="#171813"/>
+  <text x="120" y="438" font-family="sans-serif" font-size="16" fill="#e8ff64">표준화 뒤의 거리 = 각 특성이 ‘표준편차 몇 개’ 떨어졌는지 비교</text>
+  <text x="798" y="418" font-family="sans-serif" font-size="14" text-anchor="end">특성 1</text>
+  <text x="34" y="88" font-family="sans-serif" font-size="14" transform="rotate(-90 34 88)">특성 2</text>
+</svg>

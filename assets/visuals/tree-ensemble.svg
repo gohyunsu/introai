@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">여러 결정트리를 결합하는 앙상블</title>
+  <desc id="desc">데이터와 특성을 다르게 본 여러 트리의 예측을 평균 또는 투표하여 더 안정적인 결과를 얻는 흐름</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <rect x="46" y="176" width="142" height="112" rx="18" fill="#6d9ef8" stroke="#171813" stroke-width="2"/>
+  <text x="117" y="220" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="800" fill="#fff">DATA</text>
+  <text x="117" y="250" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#fff">표본·특성 재구성</text>
+  <g stroke="#171813" stroke-width="3" fill="none">
+    <path d="M188 232L278 112"/><path d="M188 232H278"/><path d="M188 232L278 352"/>
+  </g>
+  <g fill="#fff" stroke="#171813" stroke-width="2">
+    <rect x="278" y="62" width="220" height="112" rx="18"/>
+    <rect x="278" y="176" width="220" height="112" rx="18"/>
+    <rect x="278" y="290" width="220" height="112" rx="18"/>
+  </g>
+  <g font-family="sans-serif" font-weight="800" font-size="17">
+    <text x="304" y="98">TREE 01</text><text x="304" y="212">TREE 02</text><text x="304" y="326">TREE 03</text>
+  </g>
+  <g stroke="#ff755d" stroke-width="4" fill="none">
+    <path d="M320 146l42-28 42 26 44-48"/><path d="M320 260l42-42 42 38 44-34"/><path d="M320 374l42-34 42 24 44-46"/>
+  </g>
+  <g stroke="#171813" stroke-width="3">
+    <path d="M498 118L610 214"/><path d="M498 232H610"/><path d="M498 346L610 250"/>
+  </g>
+  <rect x="610" y="164" width="242" height="136" rx="22" fill="#e8ff64" stroke="#171813" stroke-width="2"/>
+  <text x="731" y="210" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="800">평균 · 다수결</text>
+  <text x="731" y="244" text-anchor="middle" font-family="sans-serif" font-size="15">개별 오차를 상쇄</text>
+  <text x="731" y="270" text-anchor="middle" font-family="sans-serif" font-size="15">분산 감소 · 안정성 증가</text>
+  <text x="450" y="444" text-anchor="middle" font-family="sans-serif" font-size="15">배깅은 독립적으로, 부스팅은 앞선 오차를 이어 받아 학습</text>
+</svg>

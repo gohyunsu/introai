@@ -14,6 +14,19 @@ the site.
 | `visuals/rnn-unfold.svg` | [Recurrent neural network unfold](https://commons.wikimedia.org/wiki/File:Recurrent_neural_network_unfold.svg) | fdeloche | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 | `visuals/autoencoder.png` | [Autoencoder structure](https://commons.wikimedia.org/wiki/File:Autoencoder_structure.png) | Chervinskii | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 
+The following diagrams were drawn specifically for this site from the linked
+official concept references. They are covered by the repository's MIT license.
+
+| Local file | Concept reference |
+| --- | --- |
+| `visuals/ai-system-map.svg` | [IBM · What is artificial intelligence?](https://www.ibm.com/think/topics/artificial-intelligence) |
+| `visuals/knn-distance.svg` | [scikit-learn · Nearest Neighbors](https://scikit-learn.org/stable/modules/neighbors.html) |
+| `visuals/validation-pipeline.svg` | [scikit-learn · Cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html) |
+| `visuals/regression-residuals.svg` | [scikit-learn · Linear models](https://scikit-learn.org/stable/modules/linear_model.html) |
+| `visuals/classification-threshold.svg` | [scikit-learn · Logistic regression](https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression) |
+| `visuals/tree-ensemble.svg` | [scikit-learn · Ensemble methods](https://scikit-learn.org/stable/modules/ensemble.html) |
+| `visuals/kmeans-pca.svg` | [scikit-learn · PCA](https://scikit-learn.org/stable/modules/decomposition.html#pca) |
+
 The MIT license at the repository root applies to original site code and
 content only. The visual assets above remain available under their respective
 licenses.

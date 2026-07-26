@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">AI, 머신러닝, 딥러닝과 생성 모델의 관계</title>
+  <desc id="desc">인공지능 안에 규칙과 탐색, 머신러닝이 있고 머신러닝 안에 딥러닝이 있으며 생성은 과업의 성격임을 보여 주는 지도</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <rect x="38" y="38" width="824" height="356" rx="26" fill="none" stroke="#171813" stroke-width="3"/>
+  <text x="68" y="82" font-family="sans-serif" font-size="24" font-weight="800" fill="#171813">ARTIFICIAL INTELLIGENCE</text>
+  <rect x="68" y="112" width="218" height="226" rx="22" fill="#e8ff64" stroke="#171813" stroke-width="2"/>
+  <text x="92" y="158" font-family="sans-serif" font-size="21" font-weight="800">규칙 · 탐색 · 계획</text>
+  <text x="92" y="194" font-family="sans-serif" font-size="15">사람이 지식과 상태 전이를 정의</text>
+  <path d="M108 250h138M108 274h98M108 298h118" stroke="#171813" stroke-width="8" stroke-linecap="round" opacity=".2"/>
+  <rect x="316" y="112" width="514" height="226" rx="22" fill="#eef4ff" stroke="#171813" stroke-width="2"/>
+  <text x="342" y="158" font-family="sans-serif" font-size="21" font-weight="800">MACHINE LEARNING</text>
+  <text x="342" y="190" font-family="sans-serif" font-size="15">데이터로 함수의 파라미터를 추정</text>
+  <rect x="520" y="210" width="280" height="96" rx="18" fill="#9d83ee" stroke="#171813" stroke-width="2"/>
+  <text x="546" y="250" font-family="sans-serif" font-size="20" font-weight="800" fill="#fff">DEEP LEARNING</text>
+  <text x="546" y="278" font-family="sans-serif" font-size="14" fill="#fff">여러 층이 표현까지 함께 학습</text>
+  <path d="M68 366h762" stroke="#ff755d" stroke-width="3" stroke-dasharray="9 9"/>
+  <circle cx="170" cy="418" r="9" fill="#ff755d"/><text x="190" y="424" font-family="sans-serif" font-size="16">분류 · 회귀</text>
+  <circle cx="380" cy="418" r="9" fill="#ff755d"/><text x="400" y="424" font-family="sans-serif" font-size="16">생성</text>
+  <circle cx="528" cy="418" r="9" fill="#ff755d"/><text x="548" y="424" font-family="sans-serif" font-size="16">추천</text>
+  <circle cx="670" cy="418" r="9" fill="#ff755d"/><text x="690" y="424" font-family="sans-serif" font-size="16">제어</text>
+</svg>

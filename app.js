@@ -168,10 +168,20 @@
 
   function renderEquation(equation) {
     if (!equation) return "";
+    let rendered = "";
+    try {
+      rendered = window.katex?.renderToString(equation.tex, {
+        displayMode: true,
+        throwOnError: true,
+        output: "htmlAndMathml"
+      }) || '<span class="math-unavailable">수식을 불러오지 못했습니다.</span>';
+    } catch {
+      rendered = '<span class="math-unavailable">수식 표기를 확인하고 있습니다.</span>';
+    }
     return `
       <div class="equation-block">
         <span>${equation.label}</span>
-        <div class="equation">\\[${equation.tex}\\]</div>
+        <div class="equation">${rendered}</div>
         <p class="equation-note">${equation.note}</p>
       </div>`;
   }
@@ -219,6 +229,35 @@
       </div>`;
   }
 
+  function renderLessonVideos(ids = []) {
+    const selected = ids
+      .map(id => media.find(item => item.videoId === id || item.id === id))
+      .filter(Boolean);
+    if (!selected.length) return "";
+    return `
+      <div class="lesson-videos ${selected.length === 1 ? "single" : ""}">
+        ${selected.map(item => `
+          <article class="lesson-video">
+            <div class="lesson-video-frame">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/${item.videoId}"
+                title="${item.title}"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="lesson-video-copy">
+              <span>${item.type} · CH ${item.chapter}</span>
+              <h3>${item.title}</h3>
+              <p>${item.takeaway || "설명을 들으며 바로 앞 개념의 입력·계산·출력을 연결해 보세요."}</p>
+              <a href="${item.href}" target="_blank" rel="noreferrer">${item.creator} · YouTube에서 보기 ↗</a>
+            </div>
+          </article>`).join("")}
+      </div>`;
+  }
+
   function renderSection(section, index) {
     return `
       <section class="lesson-section" id="${section.id}">
@@ -226,6 +265,7 @@
         <h2>${section.title}</h2>
         <div class="prose">${section.body || ""}</div>
         ${renderSourceVisuals(section.visuals)}
+        ${renderLessonVideos(section.videos)}
         ${renderEquation(section.equation)}
         ${section.afterBody ? `<div class="prose section-after-body">${section.afterBody}</div>` : ""}
         ${renderCodes(section)}
@@ -425,15 +465,45 @@
   }
 
   function renderMath(root) {
-    if (typeof window.renderMathInElement !== "function") return;
+    if (typeof window.renderMathInElement !== "function") {
+      replaceUnrenderedMath(root);
+      return;
+    }
+    const failures = [];
     window.renderMathInElement(root, {
       delimiters: [
         { left: "$$", right: "$$", display: true },
         { left: "\\[", right: "\\]", display: true },
         { left: "\\(", right: "\\)", display: false }
       ],
-      throwOnError: false
+      throwOnError: false,
+      output: "htmlAndMathml",
+      errorCallback(message) {
+        failures.push(message);
+      }
     });
+    $$(".katex-error", root).forEach(node => {
+      node.className = "math-unavailable";
+      node.textContent = "수식 표기를 확인하고 있습니다.";
+    });
+    root.dataset.mathStatus = failures.length ? "fallback" : "rendered";
+  }
+
+  function replaceUnrenderedMath(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const targets = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if (node.parentElement?.closest("pre, code, script, style")) continue;
+      if (/\\\(|\\\[|\$\$/.test(node.nodeValue || "")) targets.push(node);
+    }
+    targets.forEach(node => {
+      node.nodeValue = node.nodeValue
+        .replace(/\\\([\s\S]*?\\\)/g, "수식")
+        .replace(/\\\[[\s\S]*?\\\]/g, "수식")
+        .replace(/\$\$[\s\S]*?\$\$/g, "수식");
+    });
+    root.dataset.mathStatus = "unavailable";
   }
 
   function wrapTables(root) {

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">K-평균 군집과 PCA 투영</title>
+  <desc id="desc">고차원 점들을 중심에 할당하는 K-평균과 분산이 큰 축으로 투영하는 PCA의 차이를 나란히 표현</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="60" y="58" font-family="sans-serif" font-size="22" font-weight="800">K-MEANS · 누가 가까운가?</text>
+  <text x="520" y="58" font-family="sans-serif" font-size="22" font-weight="800">PCA · 어느 방향이 넓은가?</text>
+  <g fill="#6d9ef8"><circle cx="96" cy="154" r="9"/><circle cx="132" cy="182" r="9"/><circle cx="170" cy="140" r="9"/><circle cx="188" cy="198" r="9"/></g>
+  <g fill="#ff755d"><circle cx="304" cy="292" r="9"/><circle cx="344" cy="328" r="9"/><circle cx="382" cy="278" r="9"/><circle cx="398" cy="342" r="9"/></g>
+  <circle cx="154" cy="170" r="18" fill="#171813"/><circle cx="356" cy="310" r="18" fill="#171813"/>
+  <g stroke="#171813" stroke-width="2" stroke-dasharray="5 5" opacity=".6">
+    <path d="M96 154L154 170M132 182L154 170M170 140L154 170M188 198L154 170"/>
+    <path d="M304 292L356 310M344 328L356 310M382 278L356 310M398 342L356 310"/>
+  </g>
+  <path d="M458 90V398" stroke="#171813" stroke-width="2" opacity=".25"/>
+  <g fill="#9d83ee" opacity=".86">
+    <circle cx="556" cy="326" r="9"/><circle cx="592" cy="302" r="9"/><circle cx="626" cy="276" r="9"/>
+    <circle cx="666" cy="246" r="9"/><circle cx="704" cy="220" r="9"/><circle cx="742" cy="190" r="9"/><circle cx="784" cy="166" r="9"/>
+  </g>
+  <path d="M526 350L814 144" stroke="#171813" stroke-width="5"/>
+  <path d="M590 146L748 366" stroke="#ff755d" stroke-width="3" stroke-dasharray="8 7"/>
+  <g stroke="#171813" stroke-width="2" opacity=".45">
+    <path d="M556 326L568 338M592 302L604 314M626 276L638 288M666 246L678 258M704 220L716 232M742 190L754 202M784 166L796 178"/>
+  </g>
+  <text x="698" y="120" font-family="sans-serif" font-size="15">PC1: 최대 분산</text>
+  <text x="760" y="384" font-family="sans-serif" font-size="15">PC2: 직교</text>
+  <text x="60" y="436" font-family="sans-serif" font-size="14">군집 번호는 의미가 없고, 주성분은 타깃을 보지 않는다.</text>
+</svg>

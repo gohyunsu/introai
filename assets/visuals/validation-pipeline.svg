@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">훈련, 검증, 테스트와 전처리 파이프라인</title>
+  <desc id="desc">원본 데이터를 세 부분으로 분리하고 훈련 폴드에서만 전처리를 학습한 뒤 검증과 테스트에는 변환만 적용하는 흐름</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="52" y="64" font-family="sans-serif" font-size="24" font-weight="800">DATA SPLIT → FIT → TRANSFORM → EVALUATE</text>
+  <rect x="52" y="96" width="180" height="278" rx="20" fill="#fff" stroke="#171813" stroke-width="2"/>
+  <text x="78" y="132" font-family="sans-serif" font-size="17" font-weight="700">원본 데이터</text>
+  <rect x="78" y="158" width="128" height="124" rx="12" fill="#6d9ef8"/>
+  <rect x="78" y="288" width="128" height="44" rx="12" fill="#ff755d"/>
+  <rect x="78" y="338" width="128" height="24" rx="10" fill="#9d83ee"/>
+  <text x="142" y="224" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#fff">TRAIN</text>
+  <text x="142" y="316" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#fff">VALID</text>
+  <text x="142" y="356" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#fff">TEST</text>
+  <path d="M248 220H310" stroke="#171813" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="326" y="116" width="220" height="116" rx="18" fill="#e8ff64" stroke="#171813" stroke-width="2"/>
+  <text x="352" y="154" font-family="sans-serif" font-size="17" font-weight="800">훈련 부분에만 FIT</text>
+  <text x="352" y="184" font-family="sans-serif" font-size="14">평균 · 표준편차 · PCA 축</text>
+  <text x="352" y="208" font-family="sans-serif" font-size="14">모델 파라미터</text>
+  <rect x="326" y="258" width="220" height="116" rx="18" fill="#fff" stroke="#171813" stroke-width="2"/>
+  <text x="352" y="296" font-family="sans-serif" font-size="17" font-weight="800">검증에는 TRANSFORM</text>
+  <text x="352" y="326" font-family="sans-serif" font-size="14">훈련에서 얻은 통계를 재사용</text>
+  <text x="352" y="350" font-family="sans-serif" font-size="14">성능으로 선택만 수행</text>
+  <path d="M564 174H626M564 316H626" stroke="#171813" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="642" y="116" width="206" height="258" rx="18" fill="#171813"/>
+  <text x="670" y="158" font-family="sans-serif" font-size="18" font-weight="800" fill="#fff">TEST는 마지막 한 번</text>
+  <text x="670" y="202" font-family="sans-serif" font-size="14" fill="#ddd">모델·임곗값·전처리</text>
+  <text x="670" y="228" font-family="sans-serif" font-size="14" fill="#ddd">선택이 모두 끝난 뒤</text>
+  <path d="M674 272h140M674 300h112M674 328h128" stroke="#e8ff64" stroke-width="8" stroke-linecap="round" opacity=".75"/>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#171813"/></marker></defs>
+</svg>

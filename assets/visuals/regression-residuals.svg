@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">회귀선과 잔차 진단</title>
+  <desc id="desc">관측값에서 회귀선까지의 잔차와 잔차가 무작위로 흩어진 경우 및 곡선 패턴이 남은 경우를 비교</desc>
+  <rect width="900" height="480" rx="28" fill="#f4f1e8"/>
+  <text x="52" y="58" font-family="sans-serif" font-size="24" font-weight="800">예측값 하나보다 잔차의 모양을 본다</text>
+  <path d="M66 382V96M66 382H430" stroke="#171813" stroke-width="3"/>
+  <path d="M92 340L405 136" stroke="#9d83ee" stroke-width="5"/>
+  <g fill="#ff755d">
+    <circle cx="116" cy="318" r="10"/><circle cx="170" cy="278" r="10"/><circle cx="226" cy="296" r="10"/>
+    <circle cx="278" cy="205" r="10"/><circle cx="332" cy="178" r="10"/><circle cx="382" cy="112" r="10"/>
+  </g>
+  <g stroke="#171813" stroke-width="2" stroke-dasharray="5 4">
+    <path d="M116 318V324"/><path d="M170 278V289"/><path d="M226 296V253"/>
+    <path d="M278 205V219"/><path d="M332 178V184"/><path d="M382 112V151"/>
+  </g>
+  <text x="208" y="418" font-family="sans-serif" font-size="15">관측값 − 예측값 = 잔차</text>
+  <path d="M500 238H838M500 104V390" stroke="#171813" stroke-width="3"/>
+  <g fill="#6d9ef8"><circle cx="530" cy="220" r="8"/><circle cx="570" cy="258" r="8"/><circle cx="610" cy="226" r="8"/><circle cx="650" cy="250" r="8"/><circle cx="690" cy="214" r="8"/><circle cx="730" cy="254" r="8"/><circle cx="780" cy="224" r="8"/></g>
+  <text x="518" y="132" font-family="sans-serif" font-size="15" font-weight="700">좋은 신호: 0 주변 무작위</text>
+  <path d="M520 344Q650 260 824 350" fill="none" stroke="#ff755d" stroke-width="5"/>
+  <text x="518" y="378" font-family="sans-serif" font-size="15" font-weight="700">나쁜 신호: 곡선·부채꼴 패턴</text>
+</svg>

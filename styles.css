@@ -1808,6 +1808,20 @@ svg {
   white-space: nowrap;
 }
 
+.equation .katex-display {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 4px;
+}
+
+.math-unavailable {
+  color: var(--coral);
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: normal;
+}
+
 .equation-note {
   margin: 14px 0 0;
   color: var(--ink-faint);
@@ -2006,6 +2020,77 @@ svg {
   font-family: var(--mono);
   font-size: 8px;
   text-decoration: none;
+}
+
+.lesson-videos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 32px 0;
+}
+
+.lesson-videos.single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lesson-video {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #171813;
+  color: #f4f1e8;
+}
+
+.lesson-video-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(157,131,238,.45), transparent 34%),
+    #10110e;
+}
+
+.lesson-video-frame iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  border: 0;
+}
+
+.lesson-video-copy {
+  display: grid;
+  gap: 9px;
+  padding: 18px 20px 20px;
+}
+
+.lesson-video-copy > span,
+.lesson-video-copy > a {
+  color: rgba(244,241,232,.5);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-decoration: none;
+}
+
+.lesson-video-copy h3 {
+  margin: 0;
+  color: #f4f1e8;
+  font-size: 18px;
+  letter-spacing: -.035em;
+  line-height: 1.35;
+}
+
+.lesson-video-copy p {
+  margin: 0;
+  color: rgba(244,241,232,.66);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.lesson-video-copy > a {
+  color: #e8ff64;
 }
 
 .interactive-panel {
@@ -2443,6 +2528,7 @@ body.focus-mode .lesson-main {
   .interactive-controls { border-top: 1px solid var(--line); border-left: 0; }
   .concept-grid { grid-template-columns: 1fr; }
   .lesson-visuals { grid-template-columns: 1fr; }
+  .lesson-videos { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 540px) {
