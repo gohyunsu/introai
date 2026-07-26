@@ -1467,7 +1467,7 @@ svg {
   grid-column: 2;
 }
 
-.lesson-main article {
+.lesson-main > article {
   max-width: 900px;
   margin-inline: auto;
   padding: 64px 64px 100px;
@@ -2458,7 +2458,7 @@ body.focus-mode .lesson-main {
   .lesson-layout { grid-template-columns: 240px minmax(0, 1fr); }
   .chapter-sidebar { width: 240px; }
   .on-this-page { display: none; }
-  .lesson-main article { padding-inline: 48px; }
+  .lesson-main > article { padding-inline: 48px; }
 }
 
 @media (max-width: 820px) {
@@ -2504,7 +2504,19 @@ body.focus-mode .lesson-main {
   }
   .chapter-sidebar.is-open { transform: translateX(0); }
   .sidebar-close { display: block; }
-  .lesson-main article { padding: 74px 18px 80px; }
+  .lesson-main > article {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 74px 18px 80px;
+  }
+  .lesson-section,
+  .prose,
+  .lesson-section h2 {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
   .mobile-toc-button {
     position: fixed;
     z-index: 80;
