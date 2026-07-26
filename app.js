@@ -2,6 +2,7 @@
   const chapters = window.CHAPTERS || [];
   const media = window.MEDIA || [];
   const visuals = window.VISUALS || [];
+  const coverage = window.THEORY_COVERAGE || {};
   const PROGRESS_KEY = "introai-course-progress-v1";
   const LAST_KEY = "introai-last-chapter-v1";
 
@@ -82,6 +83,10 @@
   function renderHome() {
     const grid = $("[data-chapter-grid]");
     if (!grid) return;
+    const topicCount = $("[data-total-topics]");
+    const checkCount = $("[data-total-checks]");
+    if (topicCount) topicCount.textContent = coverage.topics || chapters.reduce((sum, item) => sum + item.sections.length, 0);
+    if (checkCount) checkCount.textContent = coverage.checks || chapters.reduce((sum, item) => sum + item.quiz.length, 0);
     const completed = getProgress();
     const featured = new Set(["01", "06", "08", "11"]);
     grid.innerHTML = chapters.map((chapter) => {
@@ -183,6 +188,14 @@
       </div>`;
   }
 
+  function renderCodes(section) {
+    const codes = [
+      ...(section.code ? [section.code] : []),
+      ...(Array.isArray(section.codes) ? section.codes : [])
+    ];
+    return codes.map(renderCode).join("");
+  }
+
   function renderSourceVisuals(ids = []) {
     const selected = ids
       .map(id => visuals.find(item => item.id === id))
@@ -214,7 +227,8 @@
         <div class="prose">${section.body || ""}</div>
         ${renderSourceVisuals(section.visuals)}
         ${renderEquation(section.equation)}
-        ${renderCode(section.code)}
+        ${section.afterBody ? `<div class="prose section-after-body">${section.afterBody}</div>` : ""}
+        ${renderCodes(section)}
       </section>`;
   }
 
@@ -289,7 +303,7 @@
         <span class="chapter-index">CHAPTER ${chapter.num} · ${phaseName(chapter.phase)}</span>
         <h1>${chapter.title}</h1>
         <p>${chapter.subtitle}</p>
-        <div class="lesson-meta"><span>${chapter.minutes} MIN READ</span><span>${chapter.sections.length} TOPICS</span><span>3 CHECKS</span></div>
+        <div class="lesson-meta"><span>${chapter.minutes} MIN STUDY</span><span>${chapter.sections.length} TOPICS</span><span>${chapter.quiz.length} CHECKS</span></div>
       </header>
       <div class="lesson-intro-grid">
         <section class="lesson-intro-card">
@@ -374,6 +388,7 @@
     renderPageToc(chapter);
     updateCourseProgress();
     window.mountLessonInteractive?.($("[data-interactive]", root), chapter.interactive.type);
+    wrapTables(root);
     renderMath(root);
     initReadingProgress();
   }
@@ -421,6 +436,19 @@
     });
   }
 
+  function wrapTables(root) {
+    $$(".comparison-table", root).forEach(table => {
+      if (table.parentElement?.classList.contains("table-scroll")) return;
+      const wrapper = document.createElement("div");
+      wrapper.className = "table-scroll";
+      wrapper.tabIndex = 0;
+      wrapper.setAttribute("role", "region");
+      wrapper.setAttribute("aria-label", "좌우로 스크롤할 수 있는 비교표");
+      table.before(wrapper);
+      wrapper.append(table);
+    });
+  }
+
   function initReadingProgress() {
     const label = $("[data-reading-progress]");
     if (!label) return;
@@ -464,7 +492,7 @@
         label: section.title,
         context: chapter.shortTitle,
         href: `learn.html?chapter=${chapter.id}#${section.id}`,
-        haystack: `${section.title} ${chapter.shortTitle} ${section.body.replace(/<[^>]+>/g, " ")}`.toLowerCase()
+        haystack: `${section.title} ${chapter.shortTitle} ${(section.body || "").replace(/<[^>]+>/g, " ")} ${(section.afterBody || "").replace(/<[^>]+>/g, " ")}`.toLowerCase()
       }))
     ]);
   }

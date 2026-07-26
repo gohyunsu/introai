@@ -1160,7 +1160,7 @@ x = base_model(x, training=False)`
         ["NVIDIA DLI · Fundamentals of Deep Learning", "https://www.nvidia.com/content/dam/en-zz/Solutions/deep-learning/deep-learning-education/dli-fundamentals-of-deep-learning-1369828-r3-web.pdf"],
         ["TensorFlow Image classification", "https://www.tensorflow.org/tutorials/images/classification"],
         ["TensorFlow Data augmentation", "https://www.tensorflow.org/tutorials/images/data_augmentation"],
-        ["Keras VGG16 and VGG19", "https://keras.io/2/api/applications/vgg/"],
+        ["Keras VGG16 and VGG19", "https://keras.io/api/applications/vgg/"],
         ["Keras Transfer learning & fine-tuning", "https://keras.io/guides/transfer_learning/"],
         ["Gradient-Based Learning Applied to Document Recognition", "https://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf"]
       ]
@@ -1499,7 +1499,7 @@ model = keras.Model(inputs, outputs)`
         ["NVIDIA · Fundamentals of Deep Learning", "https://www.nvidia.com/content/dam/en-zz/Solutions/deep-learning/deep-learning-education/dli-fundamentals-of-deep-learning-1369828-r3-web.pdf"],
         ["TensorFlow Transfer learning and fine-tuning", "https://www.tensorflow.org/tutorials/images/transfer_learning"],
         ["TensorFlow Data augmentation", "https://www.tensorflow.org/tutorials/images/data_augmentation"],
-        ["Keras VGG16 and VGG19", "https://keras.io/2/api/applications/vgg/"],
+        ["Keras VGG16 and VGG19", "https://keras.io/api/applications/vgg/"],
         ["Keras Transfer learning guide", "https://keras.io/guides/transfer_learning/"]
       ]
     },

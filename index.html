@@ -23,10 +23,12 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=dli-refresh" />
-    <script defer src="data.js?v=dli-refresh"></script>
-    <script defer src="interactives.js?v=dli-refresh"></script>
-    <script defer src="app.js?v=dli-refresh"></script>
+    <link rel="stylesheet" href="styles.css?v=theory-expanded" />
+    <script defer src="data.js?v=theory-expanded"></script>
+    <script defer src="theory.js?v=theory-expanded"></script>
+    <script defer src="practice.js?v=theory-expanded"></script>
+    <script defer src="interactives.js?v=theory-expanded"></script>
+    <script defer src="app.js?v=theory-expanded"></script>
   </head>
   <body data-page="home">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -61,8 +63,8 @@
           </h1>
           <p class="hero-lede">
             왜 데이터를 나누는지, 왜 스케일을 맞추는지, 왜 층을 깊게 쌓는지.
-            한 개념이 다음 개념을 필요로 하는 순간을 따라가면 머신러닝부터
-            생성 모델까지 하나의 지도로 연결됩니다.
+            직관에서 시작해 수식의 각 기호, 손으로 따라가는 계산, 텐서 형상과
+            코드의 선택까지 연결해 이 사이트만으로 전체 흐름을 공부할 수 있습니다.
           </p>
           <div class="hero-cta">
             <a class="button button-primary" href="learn.html?chapter=01-ai-map">
@@ -75,8 +77,8 @@
           <dl class="hero-stats" aria-label="사이트 구성">
             <div><dt>516</dt><dd>페이지 분석</dd></div>
             <div><dt>20</dt><dd>실습 노트북</dd></div>
-            <div><dt>12</dt><dd>인터랙티브 장</dd></div>
-            <div><dt>36</dt><dd>셀프체크</dd></div>
+            <div><dt data-total-topics>120+</dt><dd>상세 학습 주제</dd></div>
+            <div><dt data-total-checks>36</dt><dd>셀프체크</dd></div>
           </dl>
         </div>
         <div class="hero-visual" aria-label="AI 학습 흐름 시각화">
@@ -113,7 +115,8 @@
           </div>
           <p>
             정규 강의와 NVIDIA 딥러닝 실습을 하나의 인과적 흐름으로 엮었습니다.
-            각 단계의 마지막 질문에서 다음 개념·수식·실습으로 들어가세요.
+            정의만 나열하지 않고 가정, 수식, 계산 예제, 실패 조건과 구현 점검까지
+            한 단계씩 따라갈 수 있도록 구성했습니다.
           </p>
         </div>
         <div class="phase-tabs" role="tablist" aria-label="학습 단계 필터">

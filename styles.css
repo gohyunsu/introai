@@ -1660,6 +1660,101 @@ svg {
   padding-left: 5px;
 }
 
+.section-after-body {
+  margin-top: 26px;
+}
+
+.worked-example {
+  margin: 30px 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    color-mix(in srgb, var(--lime) 13%, var(--white));
+  background-size: 28px 28px;
+}
+
+.lab-brief {
+  margin: 0 0 30px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+}
+
+.lab-brief > span {
+  display: block;
+  padding: 11px 18px;
+  background: var(--ink);
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .11em;
+}
+
+.lab-brief dl {
+  display: grid;
+  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lab-brief dl > div {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 18px;
+}
+
+.lab-brief dl > div:nth-child(even) {
+  border-right: 0;
+}
+
+.lab-brief dl > div:nth-last-child(-n+2) {
+  border-bottom: 0;
+}
+
+.lab-brief dt {
+  color: var(--coral);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+
+.lab-brief dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.worked-example > span {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: var(--ink);
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .09em;
+}
+
+.prose .worked-example h3 {
+  margin: 18px 0 10px;
+  font-size: 19px;
+}
+
+.prose .worked-example p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
 .concept-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1787,6 +1882,26 @@ svg {
 .comparison-table td:first-child {
   color: var(--ink);
   font-weight: 700;
+}
+
+.table-scroll {
+  width: 100%;
+  margin: 28px 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border-block: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.table-scroll:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 3px;
+}
+
+.table-scroll .comparison-table {
+  min-width: 620px;
+  margin: 0;
+  border-block: 0;
 }
 
 .code-block {
@@ -2355,6 +2470,14 @@ body.focus-mode .lesson-main {
   .lesson-intro-card.question blockquote { font-size: 17px; }
   .lesson-section h2 { font-size: 31px; }
   .equation { font-size: 15px; }
+  .lab-brief dl { grid-template-columns: 1fr; }
+  .lab-brief dl > div,
+  .lab-brief dl > div:nth-child(even),
+  .lab-brief dl > div:nth-last-child(-n+2) {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .lab-brief dl > div:last-child { border-bottom: 0; }
   .interactive-head { flex-direction: column; gap: 8px; }
   .lesson-pager { grid-template-columns: 1fr; }
   .lesson-pager a:last-child { text-align: left; }
